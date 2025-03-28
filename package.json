@@ -1,0 +1,18 @@
+{
+  "name": "booklibapi",
+  "version": "1.0.0",
+  "description": "book library",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Hello METANIT.COM\" && exit 1"
+  },
+  "author": "Mariia Kolomiiets",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.13.0",
+    "nodemon": "^3.0.1"
+  }
+}
