@@ -1,0 +1,105 @@
+h2.title {
+    margin: auto;
+    width: 400px;
+    
+}
+.topmenu {
+    display: flex;
+    flex-direction: row;
+    background-color: #CCF1F1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 200px;
+}
+
+li.topmenuitem {
+    list-style-type: none;
+    margin-right: 50px;
+    margin-left: 20px;
+    font: 115%/1.5 FontFamily
+}
+
+#login {
+    background-color: #55AABB;
+    margin-top: 50px;
+    margin-left: 200px;
+    width: 300px;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+#booktpart {
+    background-color: azure;
+    margin-bottom: 10px;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+/* 
+#authorpart {
+    background-color: aliceblue;
+    margin-bottom: 10px;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+
+#categorypart {
+    background-color: cornsilk;
+    margin-bottom: 10px;
+    margin-left: 100px;
+    margin-top: 20px;
+} */
+
+#categoryeditpart {
+    background-color: cornsilk;
+    margin-bottom: 10px;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+
+
+#newstatepart {
+    background-color: azure;
+    margin-bottom: 10px;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+
+
+td {
+    padding: 3px;
+    margin: 5px;
+}
+
+
+table#booktable td,table#authortable td,table#categorytable td {
+    background-color: #EEFAFA;
+}
+
+.addbutton {
+    margin: 10px;
+}
+
+tr {
+    margin-top: 3px;
+}
+.hidden {
+    display: none;
+}
+
+.topmenu {
+    display: flex;
+    flex-direction: row;
+}
+
+.topmenuitem {
+    margin-right: 50px;
+}
+
+.part {
+    margin-left: 50px;
+}
+
+.partheader {
+    margin-left: 10px;
+}

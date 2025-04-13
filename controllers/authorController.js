@@ -6,9 +6,9 @@ const connectionOption = settings.connectionOption;
 exports.getAuthors = async function(request, response)
 {
     const connection = mysql.createConnection(connectionOption);
-    debugger;
+//    debugger;
     connection.connect();
-    const sqlSelect = `SELECT * FROM author`;
+    const sqlSelect = `SELECT authorId, authorName, lastUpdate  FROM author`;
     try {
         result = await connection.promise().query(sqlSelect);
         response.send(result[0]);
@@ -22,10 +22,10 @@ exports.getAuthors = async function(request, response)
 
 exports.postAuthor = async function(request, response)
 {
+    debugger;
     const author = request.body;
   
     const connection = mysql.createConnection(connectionOption);
-    debugger;
     connection.connect();
     let sql = null;
     if (author.authorId)
@@ -46,7 +46,7 @@ exports.postAuthor = async function(request, response)
             return;
         }
         results = await connection.promise().query(sql);
-        response.json(result[0]);
+        response.json(results[0]);
         console.log("Author aded");
     
         connection.end(function(err) {
@@ -72,7 +72,14 @@ exports.deleteAuthor = async function(request, response){
     const sqlSelect = `SELECT * FROM author WHERE AuthorId = '${id}'`;
     const sql = `DELETE FROM author WHERE AuthorId = '${id}'`;
     try {
-        result = await connection.promise().query(sqlSelect);
+        let bookResult = await connection.promise().query(`SELECT * FROM Book WHERE AuthorId = ${id}`);
+        if (bookResult[0].length > 0)
+        {
+            response.status(404).send("Cannot delete author. Author has book(s).");
+            console.log("Cannot delete author. Author has book(s).");
+            return;
+        }
+        let result = await connection.promise().query(sqlSelect);
         if (result[0].length == 0)
         {
             response.status(404).send("Author not found");
@@ -96,7 +103,7 @@ exports.getAuthorById = async function(request, response){
      
     const id = request.params.id; 
     const connection = mysql.createConnection(connectionOption);
-    const sqlSelect = `SELECT * FROM author WHERE AuthorId = '${id}'`;
+    const sqlSelect = `SELECT authorId, authorName, lastUpdate FROM author WHERE AuthorId = '${id}'`;
     try {
         result = await connection.promise().query(sqlSelect);
         if (result[0].length == 0)
@@ -105,7 +112,17 @@ exports.getAuthorById = async function(request, response){
                 console.log("Author not found");
                 return;
         }
-        response.json(result[0]);
+        let author = result[0][0];
+        booksResult = await connection.promise().query(`SELECT bookId, title FROM book WHERE AuthorId = ${id}`);
+        if (booksResult[0].length == 0)
+        {
+            author.books = [];
+        }  
+        else
+        {
+            author.book = booksResult[0][0]; 
+        }      
+        response.json(author);
         connection.end(function(err) {
             if (err) {
                 return console.log("Error: " + err.message);

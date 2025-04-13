@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Book Library</title>
+      <meta charset="utf-8" />
+      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="style.css"/>
+  </head>
+  <body>
+      <h2 class="title">Book Library Version 1.0.1</h2>
+      <nav class="menu">
+        <ul class="topmenu">
+          <li class="topmenuitem"><a id="booksref" href="#">Books</a></li>
+          <li class="topmenuitem"><a id="authorsref" href="#">Authors</a></li>
+          <li class="topmenuitem"><a id="categoriesref" href="#">Categories</a></li>
+        </ul>
+      </nav>
+      
+      
+      
+    <div class="part" id="bookpart">
+        <h3 class="partheader">Books</h3>
+        <button class="addbutton" id="addbook">Add Book</button>
+        <table id="booktable">
+        </table>
+    </div>
+
+    <div class='hidden part' id="editbookpart">
+        <h4 id="editbooklabel">Edit Book</h4>
+        <table id="bookedit">
+            <tr>
+                <td><label>Book Id</label></td>
+                <td><input id="bookid" readonly type="text"></td>
+            </tr>
+            <tr>
+                <td><label>Author</label></td>
+                <td><input id="author" type="text"></td>
+            </tr>
+            <tr>
+                <td><label>Title</label></td>
+                <td><input id="title" type="text"></td>
+            </tr>
+            <tr>
+                <td><label>Book Description</label></td>
+                <td><input id="bookDescription" type="text"></td>
+            </tr>
+            <tr>
+                <td><button id="savebook">Save</button></td>
+                <td><button id="cancelbook">Cancel</button></td>
+            </tr>
+        </table>
+
+    </div>
+
+    
+    <div class='hidden part' id="authorpart">
+        <h3 class="partheader">Authors</h3>
+        <button class="addbutton" id="addauthor">Add Author</button>
+        <table id="authortable">
+        </table>
+
+    </div>
+
+
+    <div class='hidden part' id="categorypart">
+        <h3 class="partheader">Categories</h3>
+        <button class="addbutton" id="addCategory">Add Category</button>
+        <table id="categorytable">
+        </table>
+    </div>
+
+    <div class='hidden part' id="categoryeditpart">
+        <h3 id="editcategorylabel">Edit Category</h3>
+        <input id="categoryid" hidden="" type="text">
+        <table id="categoryedit">
+            <tr>
+                <td><label>Category Name</label></td>
+                <td><input id="categoryname" type="text"></td>
+            </tr>
+            <tr>
+                <td><label>Category Description</label></td>
+                <td><input id="categorydescription" type="text"></td>
+            </tr>
+            <tr>
+                <td><button id="savecategory">Save</button></td>
+                <td><button id="cancelcategory">Cancel</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class='hidden part' id="authoreditpart">
+        <h3 id="authoreditlabel">Edit Author</h3>
+        <input class='hidden' id="authorid" type="text">
+        <table id="authoredit">
+            <tr>
+                <td><label>Author Name</label></td>
+                <td><input id="authorname" type="text"></td>
+            </tr>
+            <tr>
+                <td><button id="saveauthor">Save</button></td>
+                <td><button id="cancelauthor">Cancel</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class='hidden part' id="newstatepart">
+        <h3 id="newstatelabel">New State</h3>
+        <table id="newstatetable">
+            <tr>
+                <td><label>Page Number</label></td>
+                <td><input id="page" type="text"></td>
+            </tr>
+            <tr>
+                <td><label>Reading State</label></td>
+                <td><select id="newreadingstate" ></select>></td>
+            </tr>
+            <tr>
+                <td><button id="saveNewState">Save</button></td>
+                <td><button id="cancelnewstate">Cancel</button></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class='hidden part' id="login">
+        <h4 id="loginlabel">Login</h4>
+        <table id="loginedit">
+            <tr>
+                <td><label>Name</label></td>
+                <td><input id="loginname" type="text"></td>
+            </tr>
+            <tr>
+                <td><label>Password</label></td>
+                <td><input id="loginpassword" type="text"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><div id="loginresult"></div></td>
+            </tr>           
+            <tr>
+                <td><button id="applylogin">Save</button></td>
+                <td><button id="cancellogin">Cancel</button></td>
+            </tr>
+        </table>
+
+    </div>
+
+    
+    <div class='hidden part' id="bookdeletepart">
+        <h3 id="bookdeletelabel">You are going to delete Book.</h3>
+        <input class='hidden' id="deletebookrid" type="text">
+        <table>
+            <tr>
+                <td><label>Book Title</label></td>
+                <td><input id="deletebooktitle" type="text"></td>
+            </tr>
+            <tr>
+                <td><label>Book Author</label></td>
+                <td><input id="deletebookauthorname" type="text"></td>
+            </tr>
+            <tr>
+                <td><button id="deletebookbutton">Delete</button></td>
+                <td><button id="canceldeletebook">Cancel</button></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class='hidden part' id="authordeletepart">
+        <h3 id="authordeletelabel">You are going to delete Author.</h3>
+        <input class='hidden' id="deleteauthorid" type="text">
+        <table id="authordeleteaction">
+            <tr>
+                <td><label>Author Name</label></td>
+                <td><input id="deleteauthorname" type="text"></td>
+            </tr>
+            <tr>
+                <td><button id="deleteauthorbutton">Delete</button></td>
+                <td><button id="canceldeleteauthor">Cancel</button></td>
+            </tr>
+        </table>
+        <table id="authordeleteissue">
+            <div id="authordeleteissuetext"></div>
+            <table id="authordeleteissuetable"></table>
+        </table>
+    </div>
+    
+    <div class='hidden part' id="categorydeletepart">
+        <h3 id="categorydeletelabel">You are going to delete Category.</h3>
+        <input class='hidden' id="deletecategoryid" type="text">
+        <table>
+            <tr>
+                <td><label>Category Name</label></td>
+                <td><input id="deletecategoryname" type="text"></td>
+            </tr>
+            <tr>
+                <td><button id="deletecategorybutton">Delete</button></td>
+                <td><button id="canceldeletecategory">Cancel</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <script defer src="webapp.js"></script>
+    <script defer src="dal.js"></script>    
+    <script defer src="book.js"></script>
+    <script defer src="category.js"></script>
+    <script defer src="author.js"></script>
+
+
+  </body>
+<html>

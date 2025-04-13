@@ -11,9 +11,9 @@ const connectionOption = {
 exports.getStates = async function(request, response)
 {
     const connection = mysql.createConnection(connectionOption);
-    debugger;
+    //debugger;
     connection.connect();
-    const sqlSelect = `SELECT * FROM readingstate`;
+    const sqlSelect = `SELECT readingStateId, stateName FROM readingstate`;
     try {
         let result = await connection.promise().query(sqlSelect); 
         response.send(result[0]);
@@ -26,6 +26,10 @@ exports.getStates = async function(request, response)
 
 exports.postState = async function(request, response)
 {
+    if (global.user.role != 'Admin')
+    {
+        response.status(403).send("Access denited.");
+    }
     const state = request.body;
   
     const connection = mysql.createConnection(connectionOption);
@@ -67,6 +71,10 @@ exports.postState = async function(request, response)
 
 exports.deleteState = async function(request, response){
      
+    if (global.user.role != 'Admin')
+    {
+        response.status(403).send("Access denited.");
+    }    
     const id = request.params.id; 
     debugger;
     const connection = mysql.createConnection(connectionOption);
