@@ -1,4 +1,25 @@
 
+async function fillBookForm(bookId)
+{
+    showBookEdit();
+    if (bookId)
+    {
+        let book = await fetchBookById(bookId);
+        if ( book)
+        {
+            $('#bookid').first().val(autbookhor.bookId);
+            $('#booktitle').first().val(book.title);
+            $("#bookeditlabel").text("Edit book");
+        }
+    }
+    else
+    {
+        $('#bookid').first().val('');
+        $('#booktitle').first().val('');
+        $("#bookeditlabel").text("Add book");
+    }
+}
+
 async function saveBookForm()
 {
     //debugger;
@@ -27,7 +48,7 @@ function saveBook(book)
 }
 
 
-function saveNewStateForm()
+async function saveNewStateForm()
 {
     let bookReadingState = JSON.parse( localStorage.bookReadingState );
     let user = JSON.parse( localStorage.user );
@@ -38,7 +59,7 @@ function saveNewStateForm()
     newState.userId = user.userid;
     newState.bookId = bookReadingState.bookId;
     saveNewState(user);
-    fillBookStateForm(newState.bookReadingStateId);
+    await fillBookStateForm(newState.bookReadingStateId);
 }
 function saveNewState(newState)
 {
@@ -47,9 +68,9 @@ function saveNewState(newState)
 }
 
 
-function cancelNewStateForm()
+async function cancelNewStateForm()
 {
-    showBooks();
+    await showBooks();
 }
 
 
@@ -59,17 +80,17 @@ function fillBookTable(books)
     results.empty();                // clear element
     results.append('<thead><tr><th>Id</th><th>Author</th><th>Title</th><th>User</th><th>Last Update</th><th></th></tr></thead><tbody>')
     for (var i = 0; i < books.length; i++) {
-        results.append('<tr><td>' + books[i].bookId + '</td> <<td>' + books[i].authorName +
-            '</td> <<td>' + books[i].title +
-            '</td> <<td>' + books[i].userName +
-            '</td> <<td>' + books[i].lastUpdate +
+        results.append('<tr><td>' + books[i].bookId + '</td> <td>' + books[i].authorName +
+            '</td> <td>' + books[i].title +
+            '</td> <td>' + books[i].userName +
+            '</td> <td>' + books[i].lastUpdate +
             '</td><td><button class="editbook"+ data-id="' + books[i].bookId + '">Edit</button></td></tr>'); // add row
     }
 
 }
 
 
-function fillBookStateForm(bookId)
+async function fillBookStateForm(bookId)
 {
     showBookStateEdit();
     let results = $('#bookStateHistorytable'); 
@@ -99,11 +120,11 @@ function fillBookStateForm(bookId)
     }
 }
 
-function newReadingState(bookId)
+async function newReadingState(bookId)
 {
     debugger;
     let user = JSON.parse( localStorage.user );
-    let bookReadingState = getBookReadingState(bookId, user.userId);
+    let bookReadingState = await getBookReadingState(bookId, user.userId);
     localStorage.setItem('bookReadingState', JSON.stringify(bookReadingState));
     if (bookReadingState.bookReadingStateId) {
         $('#page').first().val(bookReadingState.page);

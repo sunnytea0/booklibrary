@@ -1,4 +1,3 @@
-
 function getAuthorList()
 {
     //data = loadFromLocalStorage();
@@ -10,20 +9,37 @@ function getAuthorList()
 async function saveAuthorForm()
 {
     let author = {};
+    
     author.authorId = $('#authorid').first().val();
     author.authorName = $('#authorname').first().val();
-    await saveAuthor(author);
-    await showAuthors();
+    let response = await saveAuthor(author);
+    if (response.status)
+    {
+        const message = await response.text();
+        $('#authorediterror').first().removeClass("hidden");
+        $("#authorediterror").text(`Error: ${message}`);
+    }
+    else
+    {
+        if( !$('#authorediterror').first().hasClass("hidden"))
+            {
+            $('#authorediterror').first().addClass("hidden");
+        }
+        await showAuthors();
+    }
 }
 
 async function saveAuthor(author)
 {
 //    debugger;
-    author = await saveAuthorToServer(author);
+    let response = await saveAuthorToServer(author);
     debugger;
-    let authors = JSON.parse( localStorage.authors );
-    if (authors)
+    if (response)
     {
+        if (response.status)
+            return response;
+        author = response;
+        let authors = JSON.parse( localStorage.authors );
         let idx = authors.findIndex(t => t.authorId == author.authorId);
         if (idx > -1)
         {
@@ -36,7 +52,7 @@ async function saveAuthor(author)
         localStorage.setItem('authors', JSON.stringify(authors));
     
     }
-
+    return author;
 }
 
 async function deleteAuthor()
@@ -82,12 +98,18 @@ async function cancelAuthorForm()
 async function fillAuthorForm(authorId)
 {
     showAuthorEdit();
+    if( !$('#authorediterror').first().hasClass("hidden")){
+        $('#authorediterror').first().addClass("hidden");
+    }
     if (authorId)
     {
         let author = await fetchAuthorById(authorId);
-        $('#authorid').first().val(author.authorId);
-        $('#authorname').first().val(author.authorName);
-        $("#authoreditlabel").text("Edit Author");
+        if ( author)
+        {
+            $('#authorid').first().val(author.authorId);
+            $('#authorname').first().val(author.authorName);
+            $("#authoreditlabel").text("Edit Author");
+        }
     }
     else
     {
@@ -99,18 +121,35 @@ async function fillAuthorForm(authorId)
 
 async function fillDeleteAuthorForm(authorId)
 {
+    debugger;
     if (authorId)
     {
         let author = await fetchAuthorById(authorId);
         if (author)
         {
             showAuthorDelete();
-            if (author.books)
+            if ((author.books?.length ?? 0) > 0)
             {
+                if( !$('#authordeleteaction').first().hasClass("hidden")){
+                    $('#authordeleteaction').first().addClass("hidden");
+                }
+                $('#authordeleteissue').first().removeClass("hidden");
+                $("#authordeleteissuetext").text("Author has books. Author can not be deleted");
 
+                var results = $('#authordeleteissuetable');  // 
+                results.empty();                // clear element
+                results.append('<thead><tr><th>Id</th><th>Title</th></thead><tbody>')
+                for (var i = 0; i < author.books.length; i++) {
+                    results.append('<tr><td>' + author.books[i].bookId + '</td> <td>' + author.books[i].title + '</td></tr>'); 
+                }
             }
             else
             {
+                if( !$('#authordeleteissue').first().hasClass("hidden")){
+                    $('#authordeleteissue').first().addClass("hidden");
+                }
+                $('#authordeleteaction').first().removeClass("hidden");
+
                 $('#deleteauthorid').first().val(author.authorId);
                 $('#deleteauthorname').first().val(author.authorName);
             }

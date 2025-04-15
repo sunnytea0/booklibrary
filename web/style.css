@@ -87,6 +87,11 @@ tr {
     display: none;
 }
 
+.errortext {
+    color:orangered;
+    margin-bottom: 2px;
+}
+
 .topmenu {
     display: flex;
     flex-direction: row;

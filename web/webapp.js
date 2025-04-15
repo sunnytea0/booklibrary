@@ -55,65 +55,65 @@ function getCategoryList()
 function createEventHandlers()
 {
  //   debugger;
-    $('body').on('click', '.editbook', function(e){
+    $('body').on('click', '.editbook',async function(e){
         e.preventDefault();
         const id = this.dataset.id;
-        fillBookTable(id);
+        await fillBookForm(id);
     });
     $('body').on('click', '.editauthor', async function(e){
         debugger;
         e.preventDefault();
         const id = this.dataset.id;
-        fillAuthorForm(id);
+        await fillAuthorForm(id);
     });
-    $('body').on('click', '.editcategory', function(e){
+    $('body').on('click', '.editcategory',async function(e){
         e.preventDefault();
         const id = this.dataset.id;
-        fillCategoryForm(id);
+        await fillCategoryForm(id);
     });
-    $('body').on('click', '.deletebook', function(e){
+    $('body').on('click', '.deletebook',async function(e){
         e.preventDefault();
         const id = this.dataset.id;
-        fillDeleteBookForm(id);
+        await fillDeleteBookForm(id);
     });
     $('body').on('click', '.deleteauthor', async function(e){
         debugger;
         e.preventDefault();
         const id = this.dataset.id;
-        fillDeleteAuthorForm(id);
+        await fillDeleteAuthorForm(id);
     });
-    $('body').on('click', '.deletecategory', function(e){
+    $('body').on('click', '.deletecategory',async function(e){
         e.preventDefault();
         const id = this.dataset.id;
-        fillDeleteCategoryForm(id);
+        await fillDeleteCategoryForm(id);
     });
-    $('body').on('click', '.newreadingstate', function(e){
+    $('body').on('click', '.newreadingstate',async function(e){
         e.preventDefault();
         const id = this.dataset.id;
-        newReadingState(id);
+        await newReadingState(id);
     });
 
-    $('body').on('click', '#addbook', function(e){
+    $('body').on('click', '#addbook',async function(e){
         e.preventDefault();
-        fillBookForm(null);
+        await fillBookForm(null);
     });
     $('body').on('click', '#addauthor', async function(e){
         debugger;
         e.preventDefault();
-        fillAuthorForm(null);
+        await fillAuthorForm(null);
     });
-    $('body').on('click', '.addcategory', function(e){
+    $('body').on('click', '#addcategory',async function(e){
         e.preventDefault();
-        fillCategoryForm(null);
+        await fillCategoryForm(null);
     });
-    $('body').on('click', '#addbookstate', function(e){
+    $('body').on('click', '#addbookstate',async function(e){
         e.preventDefault();
-        fillBookStateForm(null);
+        await fillBookStateForm(null);
     });
  
-    $('body').on('click', '#savebook', function(e){
+    $('body').on('click', '#savebook',async function(e){
         e.preventDefault();
-        saveBookForm(null);
+        await saveBookForm(null);
     });
 
     $('body').on('click', '#saveauthor',async function(e){
@@ -122,14 +122,14 @@ function createEventHandlers()
         await saveAuthorForm();
     });
 
-    $('body').on('click', '#savecategory', function(e){
+    $('body').on('click', '#savecategory',async function(e){
         e.preventDefault();
-        saveCategoryForm();
+        await saveCategoryForm();
     });
 
-    $('body').on('click', '#savenewstate', function(e){
+    $('body').on('click', '#savenewstate',async function(e){
         e.preventDefault();
-        savenewstateForm();
+        await savenewstateForm();
     });
 
     $('body').on('click', '#deleteBookbutton',async function(e){
@@ -144,32 +144,58 @@ function createEventHandlers()
         await deleteAuthor();
     });
 
-    $('body').on('click', '#deleteCategorybutton',async function(e){
+    // $('body').on('click', '#deleteCategorybutton, deleteCategoryexec',async function(e){
+    //     debugger;
+    //     e.preventDefault();
+    //     await deleteCategory();
+    // });
+
+    $('body').on('click', '.deleteCategoryexec',async function(e){
         debugger;
         e.preventDefault();
         await deleteCategory();
     });
 
-    $('body').on('click', '#cancelbook', function(e){
+    $('body').on('click', '#cancelbook',async function(e){
         e.preventDefault();
-        cancelBookForm(null);
+        await cancelBookForm(null);
     });
     $('body').on('click', '#cancelauthor', async function(e){
         debugger;
         e.preventDefault();
         await cancelAuthorForm();
     });
-    $('body').on('click', '#cancelcategory', function(e){
+    $('body').on('click', '#cancelcategory',async function(e){
         e.preventDefault();
-        cancelCategoryForm();
+        await cancelCategoryForm();
     });
-    $('body').on('click', '#cancelnewstate', function(e){
+    $('body').on('click', '#cancelnewstate',async function(e){
         e.preventDefault();
-        cancelNewStateForm();
+        await cancelNewStateForm();
     });
+
+
+    $('body').on('click', '#canceldeleteBook',async function(e){
+        debugger;
+        e.preventDefault();
+        await showBook();
+    });
+
+    $('body').on('click', '.canceldeleteauthor',async function(e){
+        debugger;
+        e.preventDefault();
+        await showAuthors();
+    });
+
+    $('body').on('click', '#canceldeletecategory',async function(e){
+        debugger;
+        e.preventDefault();
+        await showCategories();
+    });
+
     $('body').on('click', '#applylogin', async function(e){
         e.preventDefault();
-        applyLogin();
+        await applyLogin();
     });
     $('body').on('click', '#booksref', async function(e){
         e.preventDefault();
@@ -233,6 +259,15 @@ function hiddenAll()
     if( !$('#login').first().hasClass("hidden")){
         $('#login').first().addClass("hidden");
     }
+    if( !$('#bookdeletepart').first().hasClass("hidden")){
+        $('#bookdeletepart').first().addClass("hidden");
+    }
+    if( !$('#authordeletepart').first().hasClass("hidden")){
+        $('#authordeletepart').first().addClass("hidden");
+    }
+    if( !$('#categorydeletepart').first().hasClass("hidden")){
+        $('#categorydeletepart').first().addClass("hidden");
+    }
     
 }
 
@@ -253,7 +288,7 @@ async function showBooks()
 
 async function showCategories()
 {
-    debugger;
+//    debugger;
     hiddenAll();
     $('#categorypart').first().removeClass("hidden");
     let categories = await fetchCategories();
@@ -262,14 +297,14 @@ async function showCategories()
 
 async function showAuthors()
 {
-    debugger;
+//    debugger;
     hiddenAll();
     $('#authorpart').first().removeClass("hidden");
     let authors = await fetchAuthors();
     fillAuthorTable(authors);
 }
 
-function showEditCategory()
+function showCategoryEdit()
 {
     hiddenAll();
     $('#categoryeditpart').first().removeClass("hidden");

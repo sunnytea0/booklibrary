@@ -16,7 +16,7 @@ exports.getAuthors = async function(request, response)
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };    
 };
 
@@ -28,21 +28,25 @@ exports.postAuthor = async function(request, response)
     const connection = mysql.createConnection(connectionOption);
     connection.connect();
     let sql = null;
-    if (author.authorId)
-    {
-        sql = `UPDATE author SET AuthorName = '${author.authorName}' WHERE AuthorId = ${author.authorId}`;
-    }
-    else
-    {
-        sql = `INSERT INTO author(AuthorName) VALUES('${author.authorName}')`;
-    }
-    const sqlSelect = `SELECT * FROM author WHERE AuthorName = '${author.authorName}'`;
     try 
     {
+        if (author.authorId)
+        {
+                sql = `UPDATE author SET AuthorName = '${author.authorName}' WHERE AuthorId = ${author.authorId}`;
+        }
+        else
+        {
+            sql = `INSERT INTO author(AuthorName) VALUES('${author.authorName}')`;
+        }
+        let sqlSelect = `SELECT * FROM author WHERE AuthorName = '${author.authorName}'`;
+        if (author.authorId)
+        {
+            sqlSelect = `SELECT * FROM author WHERE AuthorName = '${author.authorName}' AND  authorId <> '${author.authorId}'`;
+        }
         result = await connection.promise().query(sqlSelect);
         if (result[0].length > 0)
         {
-            response.send('author is already in list.');
+            response.status(400).send('author is already in list.');
             return;
         }
         results = await connection.promise().query(sql);
@@ -59,7 +63,7 @@ exports.postAuthor = async function(request, response)
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };
     
 }
@@ -94,13 +98,13 @@ exports.deleteAuthor = async function(request, response){
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };    
     
  }
 
 exports.getAuthorById = async function(request, response){
-     
+ //   debugger;
     const id = request.params.id; 
     const connection = mysql.createConnection(connectionOption);
     const sqlSelect = `SELECT authorId, authorName, lastUpdate FROM author WHERE AuthorId = '${id}'`;
@@ -113,14 +117,15 @@ exports.getAuthorById = async function(request, response){
                 return;
         }
         let author = result[0][0];
-        booksResult = await connection.promise().query(`SELECT bookId, title FROM book WHERE AuthorId = ${id}`);
+        const sql = `SELECT bookId, title FROM book WHERE AuthorId = ${id}`;
+        let booksResult = await connection.promise().query(sql);
         if (booksResult[0].length == 0)
         {
-            author.books = [];
+            author.books = null;
         }  
         else
         {
-            author.book = booksResult[0][0]; 
+            author.books = booksResult[0]; 
         }      
         response.json(author);
         connection.end(function(err) {
@@ -132,7 +137,7 @@ exports.getAuthorById = async function(request, response){
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };   
     
 }

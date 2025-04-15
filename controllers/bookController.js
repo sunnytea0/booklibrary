@@ -19,7 +19,7 @@ INNER JOIN User as u ON (b.UserId = u.UserId)`;
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };    
 };
 
@@ -40,7 +40,7 @@ exports.postBook = async function(request, response)
             let bookrResult = await connection.promise().query(`SELECT * FROM Book WHERE BookId = '${book.bookId}'`);
             if (bookrResult[0].length == 0)
             {
-                response.send('Author not found.');
+                response.status(400).send('Author not found.');
                 return;
             }
             if (global.user.role != 'Admin' && global.user.userId != bookrResult[0][0]['bookId'])
@@ -58,13 +58,13 @@ exports.postBook = async function(request, response)
             let authorResult = await connection.promise().query(`SELECT * FROM Author WHERE AuthorId = '${book.authorId}'`);
             if (authorResult[0].length == 0)
             {
-                response.send('Author not found.');
+                response.status(400).send('Author not found.');
                 return;
             }
             let result = await connection.promise().query(sqlSelect);
             if (result[0].length > 0)
             {
-                response.send('Book is already in list.');
+                response.status(400).send('Book is already in list.');
                 return;
             }
             sql = `INSERT INTO Book(AuthorId,Title,BookDescription,UserId)
@@ -84,7 +84,7 @@ exports.postBook = async function(request, response)
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };
     
 }
@@ -124,7 +124,7 @@ WHERE BookId = ${id});`);
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };    
     
  }
@@ -156,7 +156,7 @@ WHERE BookId = ${id} `;
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };   
     
 }
@@ -178,7 +178,7 @@ WHERE b.AuthorId = ${authorId} `;
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };    
 
 }
@@ -200,7 +200,7 @@ WHERE b.UserId = ${userId}`;
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };    
 
 }
@@ -223,7 +223,7 @@ WHERE bc.CategoryId = ${categoryId}`;
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };    
 }
 
@@ -301,7 +301,7 @@ exports.updateState = async function(request, response) {
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };
    
 }
@@ -334,13 +334,13 @@ exports.addToCategory = async function(request, response){
         let categoryResult = await connection.promise().query(`SELECT * FROM Category WHERE CategoryId = ${bookCategory.categoryId}`);
         if (categoryResult[0].length == 0)
         {
-            response.send('Category not found.');
+            response.status(404).send('Category not found.');
             return;
         }
         let result = await connection.promise().query(sqlSelect);
         if (result[0].length > 0)
         {
-            response.send('Book is already in category.');
+            response.status(400).send('Book is already in category.');
             return;
         }
         sql = `INSERT INTO bookcategory ( BookId, CategoryId)
@@ -360,7 +360,7 @@ exports.addToCategory = async function(request, response){
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };
 }
 
@@ -377,7 +377,7 @@ exports.deleteFromCategory = async function(request, response){
             WHERE BookId = ${bookId} AND (${global.user.role} == 'Admin' || ${global.user.userId} == b.UserId)`);
         if (bookResult[0].length == 0)
         {
-            response.send('Book not found.');
+            response.status(404).send('Book not found.');
             return;
         }
         if (global.user.role != 'Admin' && global.user.userId != bookrResult[0][0]['bookId'])
@@ -400,7 +400,7 @@ exports.deleteFromCategory = async function(request, response){
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };
 }
 

@@ -14,13 +14,14 @@ exports.getCategories = async function(request, response)
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };
 
 };
 
 exports.postCategory = async function(request, response)
 {
+    //debugger;
     if (global.user.role != 'Admin')
     {
         response.status(403).send("Access denited.");
@@ -28,30 +29,33 @@ exports.postCategory = async function(request, response)
     const category = request.body;
   
     const connection = mysql.createConnection(connectionOption);
-    //debugger;
     connection.connect();
     let sql = null;
-    if (category.categoryId)
-    {
-        sql = `UPDATE category 
-        SET CategoryName = '${category.categoryName}' 
-            CategoryDescription = '${category.categoryDescription}' 
-        WHERE CategoryId = ${category.categoryId}`;
-    }
-    else
-    {
-        sql = `INSERT INTO category ( categoryName,CategoryDescription) VALUES('${category.categoryName}','${category.categoryDescription}')`;
-    }
-    const sqlSelect = `SELECT * FROM category WHERE categoryName = '${category.categoryName}'`;
     try {
+        if (category.categoryId)
+        {
+            sql = `UPDATE category 
+                SET CategoryName = '${category.categoryName}', 
+                    CategoryDescription = '${category.categoryDescription}' 
+                WHERE CategoryId = ${category.categoryId}`;
+        }
+        else
+        {
+            sql = `INSERT INTO category ( categoryName,CategoryDescription) VALUES('${category.categoryName}','${category.categoryDescription}')`;
+        }
+        let sqlSelect = `SELECT * FROM category WHERE categoryName = '${category.categoryName}' `;
+        if (category.categoryId)
+        {
+            sqlSelect = `SELECT * FROM category WHERE categoryName = '${category.categoryName}' AND  CategoryId <> '${category.categoryId}'`;
+        }
         let result = await connection.promise().query(sqlSelect);
         if (result[0].length > 0)
             {
-                response.send('category is already in list.');
+                response.status(400).send('category is already in list.');
                 return;
             }
             let results = await connection.promise().query(sql);
-            response.json(category);
+            response.json(results[0]);
             console.log("Category added");
                 
             connection.end(function(err) {
@@ -63,7 +67,7 @@ exports.postCategory = async function(request, response)
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };
     
 }
@@ -102,7 +106,7 @@ exports.deleteCategory = async function(request, response){
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };
     
  }
@@ -129,11 +133,11 @@ INNER JOIN booklib.category as c ON c.CategoryId = bc.CategoryId
 WHERE c.CategoryId = ${id};`);
         if (booksResult[0].length == 0)
         {
-            category.books = [];
+            category.books = null;
         }  
         else
         {
-            category.book = booksResult[0][0]; 
+            category.book = booksResult[0]; 
         }      
         response.json(category);
         connection.end(function(err) {
@@ -145,7 +149,7 @@ WHERE c.CategoryId = ${id};`);
     }
     catch (err) {
         console.log(err);
-        response.json(err);
+        response.status(400).send(err.message);
     };   
     
 }
