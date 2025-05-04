@@ -22,7 +22,7 @@ exports.getAuthors = async function(request, response)
 
 exports.postAuthor = async function(request, response)
 {
-    debugger;
+//    debugger;
     const author = request.body;
   
     const connection = mysql.createConnection(connectionOption);

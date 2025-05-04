@@ -75,7 +75,12 @@ exports.register = async function(request, response)
     const login = request.body;
   
     const connection = mysql.createConnection(connectionOption);
-    debugger;
+ //   debugger;
+    if (!login.userName || login.password)
+    {
+        response.status(400).send(`User name or password is not correct.`);
+        return;
+    }
     connection.connect();
     const sqlSelect = `SELECT * FROM user WHERE UserName = '${login.userName}'`;
     try {
@@ -87,17 +92,21 @@ exports.register = async function(request, response)
             return;
         }
         user = {
+            userName : login.userName,
+            password : login.password,
             token : crypto.randomUUID(),
             role : 'User'
         };
         
         let results = await connection.promise().query(`INSERT INTO user(UserName,Password,IsAdmin,Role,Token) 
             VALUES('${login.userName}', '${login.password}', 0, '${user.role}', '${user.token}')`);
-        response.json(results);
+        user.userId = results[0].insertId;
+        response.json(user);
 
     }
     catch (err) {
         console.log(err);
+        response.status(400).send(err);
     };
     
 }

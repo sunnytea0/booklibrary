@@ -1,10 +1,3 @@
-function getAuthorList()
-{
-    //data = loadFromLocalStorage();
-    let authors = data.authors();
-    return authors;
-}
-
 
 async function saveAuthorForm()
 {
@@ -12,28 +5,31 @@ async function saveAuthorForm()
     
     author.authorId = $('#authorid').first().val();
     author.authorName = $('#authorname').first().val();
-    let response = await saveAuthor(author);
-    if (response.status)
+
+    if (author.authorName)
     {
-        const message = await response.text();
-        $('#authorediterror').first().removeClass("hidden");
-        $("#authorediterror").text(`Error: ${message}`);
-    }
-    else
-    {
-        if( !$('#authorediterror').first().hasClass("hidden"))
-            {
-            $('#authorediterror').first().addClass("hidden");
+        let response = await saveAuthor(author);
+        if (response.status)
+        {
+            const message = await response.text();
+            $('#authorediterror').first().removeClass("hidden");
+            $("#authorediterror").text(`Error: ${message}`);
         }
-        await showAuthors();
+        else
+        {
+            if( !$('#authorediterror').first().hasClass("hidden"))
+                {
+                $('#authorediterror').first().addClass("hidden");
+            }
+            await showAuthors();
+        }
     }
 }
 
 async function saveAuthor(author)
 {
-//    debugger;
-    let response = await saveAuthorToServer(author);
     debugger;
+    let response = await saveAuthorToServer(author);
     if (response)
     {
         if (response.status)
@@ -50,14 +46,14 @@ async function saveAuthor(author)
             authors.push(author);
         }
         localStorage.setItem('authors', JSON.stringify(authors));
-    
+        fillAuthorSelects();
     }
     return author;
 }
 
 async function deleteAuthor()
 {
-    debugger;
+//    debugger;
     const authorId = $('#deleteauthorid').first().val();
     const result = await deleteAuthorFromServer(authorId);
     if (result)
@@ -74,17 +70,20 @@ async function deleteAuthor()
 
 function fillAuthorTable(authors)
 {
-    debugger;
+ //   debugger;
  
     let results = $('#authortable'); // получаем нужный элемент
     results.empty(); //очищаем элемент
  
     results.append('<thead><tr><th>Id</th><th>Name</th><th>Last Update</th><th></th></tr></thead><tbody>')
     for (let i = 0; i < authors.length; i++) {
-        results.append('<tr><td>' + authors[i].authorId + '</td> <td>' + authors[i].authorName +
-            '</td><td>' + authors[i].lastUpdate +
-            '</td><td><button class="editauthor"+ data-id="' + authors[i].authorId + '">Edit</button>' +
-            '</td><td><button class="deleteauthor"+ data-id="' + authors[i].authorId + '">Delete</button></td><tr/>'); 
+        results.append(`<tr><td>${authors[i].authorId}</td> 
+            <td>${authors[i].authorName}</td>
+            <td>${authors[i].lastUpdate}</td>
+            <td><button class="editauthor" data-id="${authors[i].authorId}">Edit</button></td>
+            <td><button class="deleteauthor"+ data-id="${authors[i].authorId}">Delete</button></td>
+            <td><button class="showauthorbooks"+ data-id="${authors[i].authorId}">Show books</button></td>
+            <tr/>`); 
     }
     results.append('</tbody>')
 }
@@ -97,6 +96,7 @@ async function cancelAuthorForm()
 
 async function fillAuthorForm(authorId)
 {
+//    debugger;
     showAuthorEdit();
     if( !$('#authorediterror').first().hasClass("hidden")){
         $('#authorediterror').first().addClass("hidden");
@@ -121,7 +121,7 @@ async function fillAuthorForm(authorId)
 
 async function fillDeleteAuthorForm(authorId)
 {
-    debugger;
+//    debugger;
     if (authorId)
     {
         let author = await fetchAuthorById(authorId);

@@ -153,3 +153,30 @@ WHERE c.CategoryId = ${id};`);
     };   
     
 }
+
+ 
+exports.getCategoryByBookId = async function(request, response){
+    //debugger; 
+    const id = request.params.id; 
+    const connection = mysql.createConnection(connectionOption);
+    try {
+        categoryResult = await connection.promise().query(`SELECT c.categoryId, categoryName, categoryDescription 
+FROM booklib.bookcategory as bc
+INNER JOIN booklib.book as b ON bc.BookId = b.BookId
+INNER JOIN booklib.category as c ON c.CategoryId = bc.CategoryId
+WHERE b.BookId = ${id};`);
+  
+        response.json(categoryResult[0]);
+        connection.end(function(err) {
+            if (err) {
+                return console.log("Error: " + err.message);
+            }
+            console.log("Connection closed");
+        });
+    }
+    catch (err) {
+        console.log(err);
+        response.status(400).send(err.message);
+    };   
+    
+}

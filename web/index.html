@@ -3,7 +3,13 @@
   <head>
       <title>Book Library</title>
       <meta charset="utf-8" />
-      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+      <script  src="jquery.min.js"></script>
+      <script  src="jquery.validate.min.js"></script>
+      <script  src="additional-methods.min.js"></script>
+      <script  src="jquery.validate.unobtrusive.min.js"></script>
+      <!-- <script  src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script  src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+      <script  src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script> -->
       <link rel="stylesheet" type="text/css" href="style.css"/>
   </head>
   <body>
@@ -13,6 +19,7 @@
           <li class="topmenuitem"><a id="booksref" href="#">Books</a></li>
           <li class="topmenuitem"><a id="authorsref" href="#">Authors</a></li>
           <li class="topmenuitem"><a id="categoriesref" href="#">Categories</a></li>
+          <li class="topmenuitem"><a id="usersref" href="#">Users</a></li>
         </ul>
       </nav>
       
@@ -20,36 +27,15 @@
       
     <div class="part" id="bookpart">
         <h3 class="partheader">Books</h3>
-        <button class="addbutton" id="addbook">Add Book</button>
+        <div clas="filter-panel">
+            <button class="addbutton" id="addbook">Add Book</button>
+            <label> Filter by title</label>
+            <input id="filertitle" size="50" type="text">
+            <button class="applyfilter" id="applyfilter">Apply Filter</button>
+            <button class="resetfilter" id="resetfilter">Reset</button>
+        </div>
         <table id="booktable">
         </table>
-    </div>
-
-    <div class='hidden part' id="editbookpart">
-        <h4 id="editbooklabel">Edit Book</h4>
-        <table id="bookedit">
-            <tr>
-                <td><label>Book Id</label></td>
-                <td><input id="bookid" readonly type="text"></td>
-            </tr>
-            <tr>
-                <td><label>Author</label></td>
-                <td><input id="author" type="text"></td>
-            </tr>
-            <tr>
-                <td><label>Title</label></td>
-                <td><input id="title" type="text"></td>
-            </tr>
-            <tr>
-                <td><label>Book Description</label></td>
-                <td><input id="bookDescription" type="text"></td>
-            </tr>
-            <tr>
-                <td><button id="savebook">Save</button></td>
-                <td><button id="cancelbook">Cancel</button></td>
-            </tr>
-        </table>
-
     </div>
 
     
@@ -58,75 +44,158 @@
         <button class="addbutton" id="addauthor">Add Author</button>
         <table id="authortable">
         </table>
-
+        <table id="authorbooktable">
+        </table>
     </div>
-
 
     <div class='hidden part' id="categorypart">
         <h3 class="partheader">Categories</h3>
         <button class="addbutton" id="addcategory">Add Category</button>
         <table id="categorytable">
         </table>
-    </div>
-
-    <div class='hidden part' id="categoryeditpart">
-        <h3 id="editcategorylabel">Edit Category</h3>
-        <input id="categoryid" hidden="" type="text">
-        <div class="errortext" id="categoryediterror"></div>
-        <table id="categoryedit">
-            <tr>
-                <td><label>Category Name</label></td>
-                <td><input id="categoryname" type="text"></td>
-            </tr>
-            <tr>
-                <td><label>Category Description</label></td>
-                <td><input id="categorydescription" type="text"></td>
-            </tr>
-            <tr>
-                <td><button id="savecategory">Save</button></td>
-                <td><button id="cancelcategory">Cancel</button></td>
-            </tr>
+        <table id="categorybooktable">
         </table>
     </div>
 
-    <div class='hidden part' id="authoreditpart">
-        <h3 id="authoreditlabel">Edit Author</h3>
-        <input class='hidden' id="authorid" type="text">
-        <div class="errortext" id="authorediterror"></div>
-        <table id="authoredit">
-            <tr>
-                <td><label>Author Name</label></td>
-                <td><input size="70" id="authorname" type="text"></td>
-            </tr>
-            <tr>
-                <td><button id="saveauthor">Save</button></td>
-                <td><button id="cancelauthor">Cancel</button></td>
-            </tr>
+    <div class='hidden part' id="userpart">
+        <h3 class="partheader">Users</h3>
+        <table id="usertable">
+        </table>
+        <table id="userbooktable">
         </table>
     </div>
 
-    <div class='hidden part' id="newstatepart">
-        <h3 id="newstatelabel">New State</h3>
-        <table id="newstatetable">
-            <tr>
-                <td><label>Page Number</label></td>
-                <td><input id="page" type="text"></td>
-            </tr>
-            <tr>
-                <td><label>Reading State</label></td>
-                <td><select id="newreadingstate" ></select>></td>
-            </tr>
-            <tr>
-                <td><button id="saveNewState">Save</button></td>
-                <td><button id="cancelnewstate">Cancel</button></td>
-            </tr>
-        </table>
+    <!-- //--------------  edit forms -----------------------------------     -->
+    <form id="categoryeditform">
+        <div class='hidden part' id="categoryeditpart">
+            <h3 id="editcategorylabel">Edit Category</h3>
+            <input id="categoryid" hidden="" type="text">
+            <div class="errortext" id="categoryediterror"></div>
+            <table id="categoryedit">
+                <tr>
+                    <td><label>Category Name</label></td>
+                    <td><input class="required" data-val="true" data-val-required="Category name cannot be empty" id="categoryname" name="categoryname" type="text"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><span class="field-validation-valid" data-valmsg-for="categoryname" data-valmsg-replace="true"></span></td>
+                </tr>
+                    <tr>
+                    <td><label>Category Description</label></td>
+                    <td><input class="required" data-val="true" data-val-required="Description cannot be empty" id="categorydescription" name="categorydescription" type="text"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><span class="field-validation-valid" data-valmsg-for="categorydescription" data-valmsg-replace="true"></span></td>
+                </tr>
+                    <tr>
+                    <td><input type="submit" id="savecategory" name="savecategory" value="Save"/></td>
+                    <td><button id="cancelcategory">Cancel</button></td>
+                </tr>
+            </table>
+        </div>
+    </form>
 
-    </div>
-    
+    <form id="authoreditform">
+        <div class='hidden part' id="authoreditpart">
+            <h3 id="authoreditlabel">Edit Author</h3>
+            <input class='hidden' id="authorid" type="text">
+            <div class="errortext" id="authorediterror"></div>
+            <table id="authoredit">
+                <tr>
+                    <td><label>Author Name</label></td>
+                    <td><input class="required" data-val="true" data-val-required="Name cannot be empty" size="70" id="authorname" name="authorname" type="text"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><span class="field-validation-valid" data-valmsg-for="authorname" data-valmsg-replace="true"></span></td>
+                </tr>
+                <tr>
+                    <td><input type="submit"  id="saveauthor"  name="saveauthor" value="Save"/></td>
+                    <td><button id="cancelauthor">Cancel</button></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+    <form id="bookeditform">
+        <div class='hidden part' id="bookeditpart">
+            <h3 id="bookeditlabel">Edit Book</h3>
+            <input class='hidden' id="editbookid" type="text">
+            <div class="errortext" id="bookediterror"></div>
+            <table id="bookeditcore">
+                <tr>
+                    <td><label>Book Author</label></td>
+                    <td><select id="editbookauthor" ></td>
+                </tr>
+                <tr>
+                    <td><label>Book Title</label></td>
+                    <td><input class="required" data-val="true" data-val-required="Title cannot be empty" size="70" id="editbooktitle" name="editbooktitle" type="text"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><span class="field-validation-valid" data-valmsg-for="editbooktitle" data-valmsg-replace="true"></span></td>
+                </tr>
+                <tr>
+                    <td><label>Book Description</label></td>
+                    <td><input class="required" data-val="true" data-val-required="Description cannot be empty" size="70" id="editbookdescription" name="editbookdescription" type="text"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><span class="field-validation-valid" data-valmsg-for="editbookdescription" data-valmsg-replace="true"></span></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" id="savebook" name="savebook" value="Save"/></td>
+                    <td><button id="cancelbook">Cancel</button></td>
+                </tr>
+            </table>
+            <div class="bookdetails" id="bookdetails">
+                <div class="flex-item bookcategorypart">
+                    <div class="partheader">
+                        <h4 class="categorybookheader">Categories of Book</h4>
+                        <button class="addbutton" id="addbookcategory">Add Category</button>
+                        </div>
+                    <table id="bookcategorytable">
+                    </table>
+                    <table id="bookcategoryeditcore">
+                        <tr>
+                            <td><label>Add Book to Category</label></td>
+                            <td><select  id="editbookcategory" ></td>
+                        </tr>
+                        <tr>
+                            <td><button id="addbookcategoryaction">Add</button></td>
+                            <td><button id="cancelbookcategory">Cancel</button></td>
+                        </tr>
+                    </table>
+                    <div class="errortext" id="bookcategoryerror"></div>
+                </div>
+                <div class="flex-item bookhistorypart">
+                    <h4 class="partheader">Reading state</h4>
+                    <table id="newstatetable">
+                        <tr>
+                            <td><label>Page Number</label></td>
+                            <td><input id="statepage" type="text"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Reading State</label></td>
+                            <td><select id="bookreadingstate" ></select></td>
+                        </tr>
+                        <tr>
+                            <td><button id="savenewstate">Update state</button></td>
+                        </tr>
+                    </table>
+                    <div class="errortext" id="bookstateerror"></div>
+                    <table id="bookstatetable">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+
+<!-- //--------------  delete forms -----------------------------------     -->
     <div class='hidden part' id="bookdeletepart">
         <h3 id="bookdeletelabel">You are going to delete Book.</h3>
-        <input class='hidden' id="deletebookrid" type="text">
+        <input class='hidden' id="deletebookid" type="text">
         <table id="bookdeleteaction">
             <tr>
                 <td><label>Book Title</label></td>
@@ -183,7 +252,7 @@
                 <td><input id="deletecategoryname" type="text"></td>
             </tr>
             <tr>
-                <td><button class="deleteCategoryexec" id="deletecategorybutton">Delete</button></td>
+                <td><button class="deletecategoryexec" id="deletecategorybutton">Delete</button></td>
                 <td><button id="canceldeletecategory">Cancel</button></td>
             </tr>
         </table>
@@ -193,34 +262,89 @@
         </table>
     </div>
 
-    
+    <!-- //--------------  login forms -----------------------------------     -->
+    <form id="loginform">
     <div class='hidden part' id="login">
-        <h4 id="loginlabel">Login</h4>
-        <table id="loginedit">
+        <div>
+            <h4 id="loginlabel">Login</h4>
+            <a id="regisaterref" href="#">Register</a>
+        </div>
+       <table id="loginedit">
             <tr>
                 <td><label>Name</label></td>
-                <td><input id="loginname" type="text"></td>
+                <td><input class="required" data-val="true" data-val-required="name cannot be empty" id="loginname" name="loginname" type="text"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><span class="field-validation-valid" data-valmsg-for="loginname" data-valmsg-replace="true"></span></td>
             </tr>
             <tr>
                 <td><label>Password</label></td>
-                <td><input id="loginpassword" type="text"></td>
+                <td><input data-val="true" data-val-required="password cannot be empty" id="loginpassword" name="loginpassword" type="text">
+                </td>
             </tr>
             <tr>
-                <td colspan="2"><div id="loginresult"></div></td>
+                <td></td>
+                <td> <span class="field-validation-valid" data-valmsg-for="loginpassword" data-valmsg-replace="true"></span></td>
+            </tr>
+            <tr>
+                <td colspan="2"><div class="errortext" id="loginresult"></div></td>
             </tr>           
             <tr>
-                <td><button id="applylogin">Login</button></td>
-                <td><button id="cancellogin">Cancel</button></td>
+                <td><input type="submit" id="applylogin" value="Login"/></td>
+                <td><button type="reset" id="cancellogin">Reset</button></td>
             </tr>
         </table>
 
     </div>
+    </form>
+
+    <form id="registerform">
+    <div class='hidden part' id="registerdiv">
+        <h4 id="registerlabel">Register</h4>
+        <table id="registeredit">
+            <tr>
+                <td><label>Name</label></td>
+                <td><input class="required" data-val="true" data-val-required="name cannot be empty" id="registername" name="registername" type="text"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><span class="field-validation-valid" data-valmsg-for="registername" data-valmsg-replace="true"></span></td>
+            </tr>
+            <tr>
+                <td><label>Password</label></td>
+                <td><input data-val="true" data-val-required="password cannot be empty" id="registerpassword" name="registerpassword" type="text"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td> <span class="field-validation-valid" data-valmsg-for="registerpassword" data-valmsg-replace="true"></span></td>
+            </tr>
+            <tr>
+                <td><label>Confirm Password</label></td>
+                <td><input data-val="true" data-val-required="password cannot be empty" id="registerconfirmpassword" name="registerconfirmpassword" type="text"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td> <span class="field-validation-valid" data-valmsg-for="registerconfirmpassword" data-valmsg-replace="true"></span></td>
+            </tr>
+            <tr>
+                <td colspan="2"><div class="errortext" id="registerresult"></div></td>
+            </tr>           
+            <tr>
+                <td><input type="submit" id="applyregister" value="Register"/></td>
+                <td><button id="cancelregister">Cancel</button></td>
+            </tr>
+        </table>
+
+    </div>
+    </form>
 
     <script defer src="webapp.js"></script>
     <script defer src="dal.js"></script>    
     <script defer src="book.js"></script>
     <script defer src="category.js"></script>
     <script defer src="author.js"></script>
+    <script defer src="user.js"></script>
 
 
   </body>

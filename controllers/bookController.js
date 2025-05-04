@@ -28,29 +28,35 @@ exports.postBook = async function(request, response)
     const book = request.body;
   
     const connection = mysql.createConnection(connectionOption);
-    debugger;
+    //debugger;
     connection.connect();
     let sql = null;
  
-    const sqlSelect = `SELECT * FROM book WHERE title = '${book.title}' and AuthorId = ${book.authorId}`;
     try 
     {
         if (book.bookId)
         {
-            let bookrResult = await connection.promise().query(`SELECT * FROM Book WHERE BookId = '${book.bookId}'`);
-            if (bookrResult[0].length == 0)
+            let bookResult = await connection.promise().query(`SELECT * FROM Book WHERE BookId = '${book.bookId}'`);
+            if (bookResult[0].length == 0)
             {
-                response.status(400).send('Author not found.');
+                response.status(400).send('Book not found.');
                 return;
             }
-            if (global.user.role != 'Admin' && global.user.userId != bookrResult[0][0]['bookId'])
+            if (global.user.role != 'Admin' && global.user.userId != bookResult[0][0]['bookId'])
             {
                 response.status(403).send("Access denited.");
                 return;
             }    
+            let result = await connection.promise().query(`SELECT * FROM book WHERE title = '${book.title}' and AuthorId = ${book.authorId}  and BookId <> ${book.bookId}`);
+            if (result[0].length > 0)
+            {
+                response.status(400).send('Book is already in list.');
+                return;
+            }
             sql = `UPDATE book 
             SET Title = '${book.title}',
-            BookDescription = '${book.description}'
+            BookDescription = '${book.bookDescription}',
+            authorId = '${book.authorId}'
             WHERE BookId = ${book.bookId}`;
         }
         else
@@ -61,7 +67,7 @@ exports.postBook = async function(request, response)
                 response.status(400).send('Author not found.');
                 return;
             }
-            let result = await connection.promise().query(sqlSelect);
+            let result = await connection.promise().query(`SELECT * FROM book WHERE title = '${book.title}' and AuthorId = ${book.authorId}`);
             if (result[0].length > 0)
             {
                 response.status(400).send('Book is already in list.');
@@ -116,6 +122,8 @@ WHERE BookId = ${id});`);
         
         let deleteStateResults  = await  connection.promise().query(`DELETE FROM booklib.bookreadingstate WHERE BookId = ${id};`);
         
+        let deleteCategoryResults  = await  connection.promise().query(`DELETE FROM booklib.bookcategory WHERE BookId = ${id};`);
+        
         let results  = await  connection.promise().query(sql);
         response.status(200);
         response.send(results);
@@ -130,7 +138,7 @@ WHERE BookId = ${id});`);
  }
 
 exports.getBookById = async function(request, response){
-     
+ //   debugger; 
     const id = request.params.id; 
     const connection = mysql.createConnection(connectionOption);
     const sqlSelect = `SELECT bookId, b.authorId, a.authorName, title, fileName, bookDescription, b.lastUpdate, b.userId, u.userName 
@@ -146,7 +154,7 @@ WHERE BookId = ${id} `;
                 console.log("Book not found");
                 return;
         }
-        response.json(result[0]);
+        response.json(result[0][0]);
         connection.end(function(err) {
             if (err) {
                 return console.log("Error: " + err.message);
@@ -164,7 +172,7 @@ WHERE BookId = ${id} `;
 exports.getBooksByAuthor = async function(request, response){
     const authorId = request.params.id; 
     const connection = mysql.createConnection(connectionOption);
-    debugger;
+ //   debugger;
     connection.connect();
     const sqlSelect = `SELECT bookId, b.authorId, a.authorName, title, fileName, bookDescription, b.lastUpdate, b.userId, u.userName 
 FROM Book as b
@@ -186,9 +194,9 @@ WHERE b.AuthorId = ${authorId} `;
 exports.getBooksByUser = async function(request, response){
     const userId = request.params.id; 
     const connection = mysql.createConnection(connectionOption);
-    debugger;
+ //   debugger;
     connection.connect();
-    const sqlSelect = `SELECT bookId, b.authorId, a.authorName, title, tileName, bookDescription, b.lastUpdate, b.userId, u.userName 
+    const sqlSelect = `SELECT bookId, b.authorId, a.authorName, title, fileName, bookDescription, b.lastUpdate, b.userId, u.userName 
 FROM Book as b
 INNER JOIN Author as a ON (b.AuthorId = a.AuthorId)
 INNER JOIN User as u ON (b.UserId = u.UserId)
@@ -208,12 +216,12 @@ WHERE b.UserId = ${userId}`;
 exports.getBooksByCategory = async function(request, response){
     const categoryId = request.params.id; 
     const connection = mysql.createConnection(connectionOption);
-    debugger;
+ //   debugger;
     connection.connect();
     const sqlSelect = `SELECT b.bookId, b.authorId, a.authorName, title, fileName, bookDescription, b.lastUpdate, b.userId, u.userName 
 FROM Book as b
 INNER JOIN Author as a ON (b.AuthorId = a.AuthorId)
-INNER JOIN User as u ON (b.UserId = u.UserId)
+LEFT OUTER JOIN User as u ON (b.UserId = u.UserId)
 INNER JOIN BookCategory bc ON b.BookId = bc.BookId
 WHERE bc.CategoryId = ${categoryId}`;
     try {
@@ -228,7 +236,7 @@ WHERE bc.CategoryId = ${categoryId}`;
 }
 
 exports.updateState = async function(request, response) {
-    debugger;
+//    debugger;
     const bookState = request.body;
   
     const connection = mysql.createConnection(connectionOption);
@@ -238,24 +246,26 @@ exports.updateState = async function(request, response) {
  
     try 
     {
-
         let bookResult = await connection.promise().query(`SELECT * FROM Book 
-            WHERE BookId = ${bookState.bookId} AND (${global.user.role} == 'Admin' || ${global.user.userId} == b.UserId)`);
+            WHERE BookId = ${bookState.bookId} AND ('${global.user.role}' = 'Admin' OR UserId = ${global.user.userId} )`);
         if (bookResult[0].length == 0)
         {
-            response.send('Book not found.');
+            response.status(400).send('Book not found.');
             return;
         }
         if (global.user.role != 'Admin' && global.user.userId != bookrResult[0][0]['bookId'])
         {
             response.status(403).send("Access denited.");
             return;
-        }    
-       let stateResult = await connection.promise().query(`SELECT * FROM ReadingState WHERE ReadingStateId = ${bookState.readingStateId}`);
-        if (stateResult[0].length == 0)
+        }  
+        if (bookState.readingStateId)  
         {
-            response.send('State not found.');
-            return;
+            let stateResult = await connection.promise().query(`SELECT * FROM ReadingState WHERE ReadingStateId = ${bookState.readingStateId}`);
+            if (stateResult[0].length == 0)
+            {
+                response.status(400).send('State not found.');
+                return;
+            }
         }
 
         let results = null; 
@@ -310,7 +320,7 @@ exports.addToCategory = async function(request, response){
     const bookCategory = request.body;
   
     const connection = mysql.createConnection(connectionOption);
-    debugger;
+    //debugger;
     connection.connect();
     let sql = null;
  
@@ -320,10 +330,10 @@ exports.addToCategory = async function(request, response){
     {
 
         let bookResult = await connection.promise().query(`SELECT * 
-            FROM Book WHERE BookId = '${bookCategory.bookId}' AND (${global.user.role} == 'Admin' || ${global.user.userId} == b.UserId)`);
+            FROM Book WHERE BookId = '${bookCategory.bookId}' AND ('${global.user.role}' = 'Admin' OR UserId = ${global.user.userId} )`);
         if (bookResult[0].length == 0)
         {
-            response.send('Book not found.');
+            response.status(400).send('Book not found.');
             return;
         }
         if (global.user.role != 'Admin' && global.user.userId != bookrResult[0][0]['bookId'])
@@ -368,13 +378,13 @@ exports.deleteFromCategory = async function(request, response){
      
     const categoryId = request.params.categoryId; 
     const bookId = request.params.bookId; 
-    debugger;
+ //   debugger;
     const connection = mysql.createConnection(connectionOption);
     const sqlSelect = `SELECT * FROM bookCategory WHERE CategoryId = ${categoryId} AND bookId = ${bookId}`;
     const sql = `DELETE FROM bookCategory WHERE CategoryId = ${categoryId} AND bookId = ${bookId}`;
     try {
         let bookResult = await connection.promise().query(`SELECT * FROM Book 
-            WHERE BookId = ${bookId} AND (${global.user.role} == 'Admin' || ${global.user.userId} == b.UserId)`);
+            WHERE BookId = ${bookId} AND ('${global.user.role}' = 'Admin' OR ${global.user.userId} = UserId)`);
         if (bookResult[0].length == 0)
         {
             response.status(404).send('Book not found.');

@@ -137,4 +137,23 @@ VALUES ('User1',  'User1',  0,  'User',  '8B60F402-4A3E-4A53-8930-E605EF331BD7')
 
 
 
+Alter Table bookreadingstatehistory ADD COLUMN ChangeDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP;
 	
+ALTER TABLE book MODIFY COLUMN LastUpdate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE category MODIFY COLUMN LastUpdate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+INSERT INTO booklib.readingstate(StateName)
+SELECT d.StateName 
+FROM (
+SELECT 'Prepare' AS StateName FROM DUAL
+UNION
+SELECT 'Ready' AS StateName FROM DUAL
+UNION
+SELECT 'Reading' AS StateName FROM DUAL
+UNION
+SELECT 'Completed' AS StateName FROM DUAL) AS d
+LEFT OUTER JOIN booklib.readingstate rs
+ON rs.StateName = d.StateName
+WHERE rs.StateName IS NULL;
+
+
