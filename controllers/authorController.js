@@ -71,7 +71,7 @@ exports.postAuthor = async function(request, response)
 exports.deleteAuthor = async function(request, response){
      
     const id = request.params.id; 
-    debugger;
+ //   debugger;
     const connection = mysql.createConnection(connectionOption);
     const sqlSelect = `SELECT * FROM author WHERE AuthorId = '${id}'`;
     const sql = `DELETE FROM author WHERE AuthorId = '${id}'`;

@@ -54,7 +54,7 @@ async function saveCategoryForm()
 
 async function saveCategory(category)
 {
-    debugger;
+//    debugger;
     let response  = await saveCategoryToServer(category);
     if (response.status)
         return response;

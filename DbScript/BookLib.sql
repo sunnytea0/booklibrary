@@ -130,10 +130,10 @@ ALTER TABLE user ADD COLUMN role varchar(100) NULL;
 ALTER TABLE user ADD COLUMN token varchar(100) NULL;
 
 INSERT INTO `user` (`UserName`,  `Password`,  `IsAdmin`,  `role`,  `token`)
-VALUES ('Admin',  'Admin',  1,  'Admin',  '21BF0F30-7795-4BF2-99CC-13C505D38259') 
+VALUES ('Admin',  'Admin',  1,  'Admin',  '21BF0F30-7795-4BF2-99CC-13C505D38259');
 
 INSERT INTO `user` (`UserName`,  `Password`,  `IsAdmin`,  `role`,  `token`)
-VALUES ('User1',  'User1',  0,  'User',  '8B60F402-4A3E-4A53-8930-E605EF331BD7') 
+VALUES ('User1',  'User1',  0,  'User',  '8B60F402-4A3E-4A53-8930-E605EF331BD7');
 
 
 

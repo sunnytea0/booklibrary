@@ -15,7 +15,7 @@ exports.getStates = async function(request, response)
         response.send(result[0]);
     }
     catch (err) {
-        debugger;
+ //       debugger;
         console.log(err);
         response.json(err);
     };

@@ -583,6 +583,7 @@ async function applyRegister()
     if (userName && password)
     {
         let user = await register(userName, password);
+ //       debugger;
         if (user)
         {
             $("#registerresult").text("");

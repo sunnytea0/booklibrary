@@ -98,7 +98,7 @@ exports.postBook = async function(request, response)
 exports.deleteBook = async function(request, response){
      
     const id = request.params.id; 
-    debugger;
+ //   debugger;
     const connection = mysql.createConnection(connectionOption);
     const sqlSelect = `SELECT * FROM book WHERE BookId = ${id}`;
     const sql = `DELETE FROM book WHERE BookId = ${id}`;

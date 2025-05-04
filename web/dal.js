@@ -353,7 +353,7 @@ async function deleteCategoryFromServer(categoryId) {
 async function deleteBookCategoryFromServer(bookId,categoryId) {
     try 
     {
-        debugger;
+//        debugger;
         const option = getOptionForDelete();
         let response = await fetch(`${urlOption.host}/api/book/deleteFromCategory/${bookId}/${categoryId}`, option) // 
 //        debugger;
@@ -420,7 +420,7 @@ async function register(userName, password) {
         let user = null;
         if (response.status == 200)
             user = await response.json();  // 
-        localStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('user', JSON.stringify(user));
         return user;
     }
     catch(error)
@@ -461,7 +461,7 @@ async function saveBookToServer (book) {
 async function saveAuthorToServer (author) {
     try 
     {
-        debugger;
+ //       debugger;
         const option = getOptionForPost();
         option.body = JSON.stringify(author)
         let response = await fetch(`${urlOption.host}/api/author`, option) // 
@@ -494,7 +494,7 @@ async function saveCategoryToServer (category) {
         const option = getOptionForPost();
         option.body = JSON.stringify(category)
         let response = await fetch(`${urlOption.host}/api/category`, option) // 
-        debugger;
+ //       debugger;
         let result = null;
         if (response.status != 400)
         {

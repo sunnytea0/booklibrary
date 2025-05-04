@@ -28,7 +28,7 @@ async function saveAuthorForm()
 
 async function saveAuthor(author)
 {
-    debugger;
+//    debugger;
     let response = await saveAuthorToServer(author);
     if (response)
     {
