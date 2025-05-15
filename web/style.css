@@ -3,13 +3,76 @@ h2.title {
     width: 400px;
     
 }
+h2, .login-title, .register-title {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+button, input {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+/* Головне меню */
 .topmenu {
-    display: flex;
-    flex-direction: row;
-    background-color: #CCF1F1;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 200px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  background: linear-gradient(to right, #FFCF48, #f8cdda);
+  padding: 10px 20px;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+}
+
+/* Ліва частина: лого + назва */
+.topmenu-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Центр: посилання */
+.topmenu-center {
+  display: flex;
+  gap: 20px;
+}
+
+
+.topmenuitem a {
+  color: #000; /* чорний текст */
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.topmenuitem a:hover {
+  background-color: #f0f0f0; /* світло-сірий фон при наведенні */
+  color: #000; /* залишається чорним */
+}
+
+/* Права частина: іконки */
+.topmenu-right {
+  display: flex;
+  gap: 15px;
+}
+
+.topmenu-icon {
+  background: #7c5dfa;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.topmenu-icon:hover {
+  background: #5a3ec8;
 }
 
 li.topmenuitem {
@@ -19,22 +82,136 @@ li.topmenuitem {
     font: 115%/1.5 FontFamily
 }
 
-#login, #registerdiv {
-    background-color: #55AABB;
-    margin-top: 50px;
-    margin-left: 200px;
-    padding-left: 20px;
-    padding-top: 5px;
-    padding-bottom: 10px;
+#registerdiv input,
+#login input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
-#login {
-    width: 300px;
+
+.input-field {
+  width: 20%;
+  padding: 6px 10px;
+  font-size: 14px;
+  margin: 5px auto;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-#registerdiv {
-    width: 400px;
+.signup-button {
+  width: 50%;
+  padding: 6px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: block;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
+
+.signup-button:hover {
+  background-color: #0056b3;
+}
+.register-link {
+  margin-bottom: 10px; 
+  text-align: center;
+}
+#registerdiv button,
+#login button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#registerdiv button:hover,
+#login button:hover {
+  background-color: #0056b3;
+}
+
+
+#registerdiv p,
+#login p {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+ .login-title {
+
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  margin-top: 5px;
+}
+.login-title a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.login-title a:hover {
+  color: #cce6ff;
+}
+  .login-container {
+
+  background-color: rgba(0, 0, 0, 0.5); /* чорний з прозорістю 0.5 */
+  border-radius: 15px;
+  padding: 20px;
+  color: white; /* щоб текст був світлим на темному фоні */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  max-width: 360px;
+  margin-left: 1000px;
+  margin-top: 100px;
+  }
+
+  .login-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  #loginedit td {
+    padding: 5px;
+    text-align: center;
+
+  }
+
+  .register-link {
+    font-size: 14px;
+    
+  }
+#registerdiv p a,
+#login p a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+#registerdiv p a:hover,
+#login p a:hover {
+  text-decoration: underline;
+}
+
+body {
+  background-image: url('images/bg.png');
+  background-size: 1550px 700px;
+  background-repeat: no-repeat;
+  background-position: center top;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
 
 #booktpart {
     background-color: azure;
@@ -146,7 +323,7 @@ tr {
 }
 
 #regisaterref {
-    margin-left: 150px;
+    margin-left: 5px;
 }
 
 th {
@@ -199,3 +376,7 @@ input[type="checkbox"].input-validation-error {
 #addbook {
     margin-right: 100px;
 }
+.hidden {
+  display: none !important;
+}
+

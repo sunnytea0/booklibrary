@@ -33,6 +33,7 @@ async function prepare()
             $('#usersref').first().addClass("hidden");
         }
     }
+    $('.topmenu').first().removeClass("hidden");
 }
 
 async function getBookList()
@@ -216,7 +217,7 @@ function createEventHandlers()
         await showCategories();
     });
 
-    $('body').on('click', '#cancelregister',async function(e){
+    $('body').on('click', '#loginref',async function(e){
 //        debugger;
         e.preventDefault();
         await showLogin();
@@ -594,5 +595,10 @@ async function applyRegister()
         {
             $("#registerresult").text("Register error");
         }
+
     }
+    
+
+ 
+
 }

@@ -34,10 +34,10 @@ exports.getUser = async function(token)
 
 exports.login = async function(request, response)
 {
+ //   debugger;
     const login = request.body;
   
     const connection = mysql.createConnection(connectionOption);
-//    debugger;
     connection.connect();
     const sqlSelect = `SELECT * FROM user WHERE UserName = '${login.userName}' AND Password = '${login.password}'`;
     try {

@@ -11,11 +11,13 @@
       <script  src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
       <script  src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script> -->
       <link rel="stylesheet" type="text/css" href="style.css"/>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   </head>
   <body>
       <h2 class="title">Book Library Version 1.0.1</h2>
       <nav class="menu">
-        <ul class="topmenu">
+        <ul class="topmenu hidden">
           <li class="topmenuitem"><a id="booksref" href="#">Books</a></li>
           <li class="topmenuitem"><a id="authorsref" href="#">Authors</a></li>
           <li class="topmenuitem"><a id="categoriesref" href="#">Categories</a></li>
@@ -261,83 +263,102 @@
             <table id="categorydeleteissuetable"></table>
         </table>
     </div>
+ <!-- Logout Button -->
+  <button id="logoutbtn" style="display: none; position: absolute; top: 10px; right: 10px;">Logout</button>
 
     <!-- //--------------  login forms -----------------------------------     -->
-    <form id="loginform">
-    <div class='hidden part' id="login">
-        <div>
-            <h4 id="loginlabel">Login</h4>
-            <a id="regisaterref" href="#">Register</a>
-        </div>
-       <table id="loginedit">
-            <tr>
-                <td><label>Name</label></td>
-                <td><input class="required" data-val="true" data-val-required="name cannot be empty" id="loginname" name="loginname" type="text"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><span class="field-validation-valid" data-valmsg-for="loginname" data-valmsg-replace="true"></span></td>
-            </tr>
-            <tr>
-                <td><label>Password</label></td>
-                <td><input data-val="true" data-val-required="password cannot be empty" id="loginpassword" name="loginpassword" type="text">
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td> <span class="field-validation-valid" data-valmsg-for="loginpassword" data-valmsg-replace="true"></span></td>
-            </tr>
-            <tr>
-                <td colspan="2"><div class="errortext" id="loginresult"></div></td>
-            </tr>           
-            <tr>
-                <td><input type="submit" id="applylogin" value="Login"/></td>
-                <td><button type="reset" id="cancellogin">Reset</button></td>
-            </tr>
-        </table>
+<form id="loginform">
+  <div class="login-container" id="login">
+    <h2 class="login-title">Login</h2>
 
-    </div>
-    </form>
+    <table id="loginedit">
+      <tr>
+        <td><label for="loginname">Name</label></td>
+        <td><input class="required" data-val="true" data-val-required="name cannot be empty" id="loginname" name="loginname" type="text"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="field-validation-valid" data-valmsg-for="loginname" data-valmsg-replace="true"></span></td>
+      </tr>
+      <tr>
+        <td><label for="loginpassword">Password</label></td>
+        <td><input data-val="true" data-val-required="password cannot be empty" id="loginpassword" name="loginpassword" type="password"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="field-validation-valid" data-valmsg-for="loginpassword" data-valmsg-replace="true"></span></td>
+      </tr>
+      <tr>
+        <td colspan="2"><div class="errortext" id="loginresult"></div></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: center;">
+          <input type="submit" id="applylogin" value="Login" />
+        </td>
+      </tr>
+    </table>
 
-    <form id="registerform">
-    <div class='hidden part' id="registerdiv">
-        <h4 id="registerlabel">Register</h4>
-        <table id="registeredit">
-            <tr>
-                <td><label>Name</label></td>
-                <td><input class="required" data-val="true" data-val-required="name cannot be empty" id="registername" name="registername" type="text"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><span class="field-validation-valid" data-valmsg-for="registername" data-valmsg-replace="true"></span></td>
-            </tr>
-            <tr>
-                <td><label>Password</label></td>
-                <td><input data-val="true" data-val-required="password cannot be empty" id="registerpassword" name="registerpassword" type="text"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td> <span class="field-validation-valid" data-valmsg-for="registerpassword" data-valmsg-replace="true"></span></td>
-            </tr>
-            <tr>
-                <td><label>Confirm Password</label></td>
-                <td><input data-val="true" data-val-required="password cannot be empty" id="registerconfirmpassword" name="registerconfirmpassword" type="text"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td> <span class="field-validation-valid" data-valmsg-for="registerconfirmpassword" data-valmsg-replace="true"></span></td>
-            </tr>
-            <tr>
-                <td colspan="2"><div class="errortext" id="registerresult"></div></td>
-            </tr>           
-            <tr>
-                <td><input type="submit" id="applyregister" value="Register"/></td>
-                <td><button id="cancelregister">Cancel</button></td>
-            </tr>
-        </table>
+    <p class="register-link">
+      Не маєте акаунту? <a href="#" id="regisaterref">Зареєструйтесь</a>
+    </p>
+  </div>
+</form>
 
-    </div>
-    </form>
+<form id="registerform">
+  <div class="login-container" id="registerdiv">
+    <h2 class="login-title">Register</h2>
+
+    <table id="registeredit">
+      <tr>
+        <td><label for="registername">Name</label></td>
+        <td>
+          <input class="required" data-val="true" data-val-required="name cannot be empty"
+                 id="registername" name="registername" type="text" />
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="field-validation-valid" data-valmsg-for="registername" data-valmsg-replace="true"></span></td>
+      </tr>
+      <tr>
+        <td><label for="registeremail">Email</label></td>
+        <td>
+          <input class="required" data-val="true" data-val-required="email cannot be empty"
+                 id="registeremail" name="registeremail" type="email" />
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="field-validation-valid" data-valmsg-for="registeremail" data-valmsg-replace="true"></span></td>
+      </tr>
+      <tr>
+        <td><label for="registerpassword">Password</label></td>
+        <td>
+          <input class="required" data-val="true" data-val-required="password cannot be empty"
+                 id="registerpassword" name="registerpassword" type="password" />
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="field-validation-valid" data-valmsg-for="registerpassword" data-valmsg-replace="true"></span></td>
+      </tr>
+      <tr>
+        <td colspan="2"><div class="errortext" id="registerresult"></div></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: center;">
+          <input type="submit" id="applyregister" value="Sign Up" />
+        </td>
+      </tr>
+    </table>
+
+    <p class="login-l" style="text-align: center; margin-top: 10px;">
+      Вже маєте акаунт? <a href="#" id="loginref">Увійдіть</a>
+    </p>
+  </div>
+</form>
+
+    
 
     <script defer src="webapp.js"></script>
     <script defer src="dal.js"></script>    
