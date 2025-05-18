@@ -260,9 +260,6 @@ table#booktable td,table#authortable td,table#categorytable td, table#usertable 
     background-color: #EEFAFA;
 }
 
-.addbutton {
-    margin: 10px;
-}
 
 tr {
     margin-top: 3px;
@@ -286,13 +283,22 @@ tr {
 }
 
 .part {
+
     margin-left: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);    max-width: 800px;
+      
 }
 
 .partheader {
     margin-top: 15px;
     margin-bottom: 10px;
     margin-left: 20px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.8em;
 }
 
 .bookdetails {
@@ -302,12 +308,71 @@ tr {
 
 .filter-panel {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
 }
+.filter-panel label {
+      margin-right: 10px;
+      font-weight: bold;
+    }
+
+.filter-panel input[type="text"] {
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 300px;
+    }
+  .filter-panel button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+.filter-panel button:hover {
+    background-color: #0056b3;
+
+    }
+ 
+.addbutton {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50px;
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#booktable {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+#booktable th, #booktable td {
+        border: 1px solid #af9b86;
+        padding: 10px;
+        text-align: left;
+    }
+
+#booktable th {
+        background-color: #fff39b;
+    }
 
 .flex-item {
     margin: 5px;
     padding: 2px;
-    background-color: #BBFFE7;
+  
 }
 
 .bookcategorypart {
@@ -374,7 +439,8 @@ input[type="checkbox"].input-validation-error {
 }
 
 #addbook {
-    margin-right: 100px;
+    margin-right: 10px;
+  
 }
 .hidden {
   display: none !important;
