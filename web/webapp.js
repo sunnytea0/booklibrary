@@ -52,6 +52,13 @@ async function getBookList()
     return books;
 }
 
+
+async function getFilterBookList(search)
+{
+    let books = await fetchFilterBooks(search);
+    return books;
+}
+
 function getAuthorList()
 {
 
@@ -455,9 +462,10 @@ function hiddenAll()
 
 function showLogin()
 {
+ //   debugger;
     hiddenAll();
-    if( !$('#topmenu').first().hasClass("hidden")){
-        $('#topmenu').first().addClass("hidden");
+    if( !$('.topmenu').first().hasClass("hidden")){
+        $('.topmenu').first().addClass("hidden");
     }
     $('#login').first().removeClass("hidden");
 }
@@ -527,8 +535,8 @@ function showAuthorEdit()
 
 function showCategoryEdit()
 {
-    if( !$('#cagtegorymain').first().hasClass("hidden")){
-        $('#cagtegorymain').first().addClass("hidden");
+    if( !$('#categorymain').first().hasClass("hidden")){
+        $('#categorymain').first().addClass("hidden");
     }
 
     $('#categoryeditpart').first().removeClass("hidden");
