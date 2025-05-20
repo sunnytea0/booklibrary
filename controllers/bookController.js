@@ -26,6 +26,37 @@ INNER JOIN User as u ON (b.UserId = u.UserId)`;
     };    
 };
 
+exports.getFilterBooks = async function(request, response)
+{
+    debugger;
+    const search = request.params.search; 
+    const connection = mysql.createConnection(connectionOption);
+    connection.connect();
+    const sqlSelect = `SELECT bookId, b.authorId, a.authorName, title, fileName, bookDescription, b.lastUpdate, b.userId, u.userName 
+FROM Book as b
+INNER JOIN Author as a ON (b.AuthorId = a.AuthorId)
+INNER JOIN User as u ON (b.UserId = u.UserId)
+WHERE EXISTS 
+(
+SELECT * FROM Category c INNER JOIN BookCategory bc ON c.categoryId = bc.categoryId 
+WHERE bc.bookId = b.bookId AND c.CategoryName LIKE '%${search}%'
+)
+OR a.authorName LIKE '%${search}%'
+OR b.title LIKE '%${search}%'`;
+    try {
+        result = await connection.promise().query(sqlSelect);
+        response.send(result[0]);
+        return;
+    }
+    catch (err) {
+        console.log(err);
+        response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
+    };    
+};
+
 exports.postBook = async function(request, response)
 {
     const book = request.body;

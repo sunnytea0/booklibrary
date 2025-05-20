@@ -352,11 +352,11 @@ async function applyFilter()
 {
     debugger;
     const filtervalue = $('.filtervalue').first().val().toLowerCase();
-    let books = await getBookList();
-    books = books.filter(item => item.title.toLowerCase().indexOf(filtervalue) >= 0 || 
-    item.authorName.toLowerCase().indexOf(filtervalue) >= 0 ||
-    item.userName.toLowerCase().indexOf(filtervalue) >= 0 ||
-    item.bookDescription.toLowerCase().indexOf(filtervalue) >= 0 );
+    let books = await getFilterBookList(filtervalue);
+    // books = books.filter(item => item.title.toLowerCase().indexOf(filtervalue) >= 0 || 
+    // item.authorName.toLowerCase().indexOf(filtervalue) >= 0 ||
+    // item.userName.toLowerCase().indexOf(filtervalue) >= 0 ||
+    // item.bookDescription.toLowerCase().indexOf(filtervalue) >= 0 );
     fillBookTable(books);
 }
 

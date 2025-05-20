@@ -15,6 +15,22 @@ async function fetchBooks() {
     return null;       
 }
 
+async function fetchFilterBooks(search) {
+    try
+    {
+        let option = getOptionForGet()
+        let response = await fetch(`${urlOption.host}/api/book/filter/${search}`, option); // 
+        let data = await response.json();  // 
+        return data;
+    }
+    catch(error)
+    {
+        debugger;
+        console.error('Error fetching books:', error); // 
+    }  
+    return null;       
+}
+
 async function fetchBookById(bookId) {
     try
     {
