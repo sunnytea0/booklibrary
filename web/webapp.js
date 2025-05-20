@@ -473,6 +473,7 @@ async function showBooks()
 //    debugger;
     hiddenAll();
     $('#bookpart').first().removeClass("hidden");
+    $('#bookmain').first().removeClass("hidden");
     let books = await fetchBooks();
     fillBookTable(books);
 }
@@ -482,6 +483,7 @@ async function showCategories()
 //    debugger;
     hiddenAll();
     $('#categorypart').first().removeClass("hidden");
+    $('#categorymain').first().removeClass("hidden");
     let categories = await fetchCategories();
     fillCategoryTable(categories);
 }
@@ -500,44 +502,63 @@ async function showAuthors()
 //    debugger;
     hiddenAll();
     $('#authorpart').first().removeClass("hidden");
+    $('#authormain').first().removeClass("hidden");
     let authors = await fetchAuthors();
     fillAuthorTable(authors);
-}
+}main
 
 function showBookEdit()
 {
-    hiddenAll();
+    if( !$('#bookmain').first().hasClass("hidden")){
+        $('#bookmain').first().addClass("hidden");
+    }
+
     $('#bookeditpart').first().removeClass("hidden");
 }
 
 function showAuthorEdit()
 {
-    hiddenAll();
+    if( !$('#authormain').first().hasClass("hidden")){
+        $('#authormain').first().addClass("hidden");
+    }
+
     $('#authoreditpart').first().removeClass("hidden");
 }
 
 function showCategoryEdit()
 {
-    hiddenAll();
+    if( !$('#cagtegorymain').first().hasClass("hidden")){
+        $('#cagtegorymain').first().addClass("hidden");
+    }
+
     $('#categoryeditpart').first().removeClass("hidden");
 }
 
 
 function showBookDelete()
 {
-    hiddenAll();
+    if( !$('#bookmain').first().hasClass("hidden")){
+        $('#bookmain').first().addClass("hidden");
+    }
+
     $('#bookdeletepart').first().removeClass("hidden");
 }
 
 function showAuthorDelete()
 {
-    hiddenAll();
+    if( !$('#authormain').first().hasClass("hidden")){
+        $('#authormain').first().addClass("hidden");
+    }
+
     $('#authordeletepart').first().removeClass("hidden");
 }
 
 function showCategoryDelete()
 {
-    hiddenAll();
+    if( !$('#cagtegorymain').first().hasClass("hidden")){
+        $('#cagtegorymain').first().addClass("hidden");
+    }
+
     $('#categorydeletepart').first().removeClass("hidden");
 }
 
