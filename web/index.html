@@ -30,16 +30,18 @@
       
     <!-- //--------------  book part -----------------------------------     -->
     <div class="part" id="bookpart">
-        <h3 class="partheader">Books</h3>
-        <div class="filter-panel">
-            <button class="addbutton" id="addbook">Add Book</button>
-            <label class="filtertitle"> Filter by title</label>
-            <input class="filter-panel input filtervalue" size="50" type="text">
-            <button class="applyfilter" id="applyfilter">Apply Filter</button>
-            <button class="resetfilter" id="resetfilter">Reset</button>
+        <div id="bookmain">
+            <h3 class="partheader">Books</h3>
+            <div class="filter-panel">
+                <button class="addbutton" id="addbook">Add Book</button>
+                <label class="filtertitle"> Filter by title</label>
+                <input class="filter-panel input filtervalue" size="50" type="text">
+                <button class="applyfilter" id="applyfilter">Apply Filter</button>
+                <button class="resetfilter" id="resetfilter">Reset</button>
+            </div>
+            <table id="booktable">
+            </table>
         </div>
-        <table id="booktable">
-        </table>
  
     <!-- //--------------  edit forms -----------------------------------     -->
         <form id="bookeditform">
@@ -144,13 +146,14 @@
     
     <!-- //--------------  author part -----------------------------------     -->
     <div class='hidden part' id="authorpart">
-        <h3 class="partheader">Authors</h3>
-        <button class="addbutton" id="addauthor">Add Author</button>
-        <table id="authortable">
-        </table>
-        <table id="authorbooktable">
-        </table>
-
+        <div id="authormain">
+            <h3 class="partheader">Authors</h3>
+            <button class="addbutton" id="addauthor">Add Author</button>
+            <table id="authortable">
+            </table>
+            <table id="authorbooktable">
+            </table>
+        </div>
     <!-- //--------------  edit forms -----------------------------------     -->
         <form id="authoreditform">
             <div class='hidden part' id="authoreditpart">
@@ -201,12 +204,14 @@
 
     <!-- //--------------  category part -----------------------------------     -->
     <div class='hidden part' id="categorypart">
-        <h3 class="partheader">Categories</h3>
-        <button class="addbutton" id="addcategory">Add Category</button>
-        <table id="categorytable">
-        </table>
-        <table id="categorybooktable">
-        </table>
+        <div id="categorymain">
+            <h3 class="partheader">Categories</h3>
+            <button class="addbutton" id="addcategory">Add Category</button>
+            <table id="categorytable">
+            </table>
+            <table id="categorybooktable">
+            </table>
+        </div>
 
     <!-- //--------------  edit forms -----------------------------------     -->
         <form id="categoryeditform">
