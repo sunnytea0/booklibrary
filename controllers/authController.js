@@ -36,7 +36,7 @@ exports.getUser = async function(token)
 
 exports.login = async function(request, response)
 {
-    debugger;
+//    debugger;
     const login = request.body;
   
     const connection = mysql.createConnection(connectionOption);
