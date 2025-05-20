@@ -17,6 +17,9 @@ exports.getAuthors = async function(request, response)
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };    
 };
 
@@ -52,18 +55,14 @@ exports.postAuthor = async function(request, response)
         results = await connection.promise().query(sql);
         response.json(results[0]);
         console.log("Author aded");
-    
-        connection.end(function(err) {
-            if (err) {
-              return console.log("Error: " + err.message);
-            }
-            console.log("Connection closed");
-        });
 
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };
     
 }
@@ -94,11 +93,13 @@ exports.deleteAuthor = async function(request, response){
         response.status(200);
         response.send(results);
         console.log("Author deleted");
-        connection.end();
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };    
     
  }
@@ -128,16 +129,13 @@ exports.getAuthorById = async function(request, response){
             author.books = booksResult[0]; 
         }      
         response.json(author);
-        connection.end(function(err) {
-            if (err) {
-                return console.log("Error: " + err.message);
-            }
-            console.log("Connection closed");
-        });
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };   
     
 }

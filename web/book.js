@@ -350,16 +350,16 @@ async function deleteBookCategory(categoryId)
 
 async function applyFilter()
 {
-    const filerTitle = $('#filertitle').first().val().toLowerCase();
+    const filtervalue = $('.filtervalue').first().val().toLowerCase();
     let books = await getBookList();
-    books = books.filter(item => item.title.toLowerCase().indexOf(filerTitle) >= 0);
+    books = books.filter(item => item.title.toLowerCase().indexOf(filtervalue) >= 0);
     fillBookTable(books);
 }
 
 
 async function resetFilter()
 {
-    $('#filertitle').first().val('');
+    $('.filtervalue').first().val('');
     let books = await getBookList();
     fillBookTable(books);
 }

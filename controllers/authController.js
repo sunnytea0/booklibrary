@@ -28,9 +28,11 @@ exports.getUser = async function(token)
     }
     catch (err) {
         console.log(err);
-    };
-
-};
+    }
+    finally {
+        connection.end();
+    }
+}
 
 exports.login = async function(request, response)
 {
@@ -66,8 +68,10 @@ exports.login = async function(request, response)
     }
     catch (err) {
         console.log(err);
-    };
-    
+    }
+    finally {
+        connection.end();
+    }
 }
 
 exports.register = async function(request, response)
@@ -107,6 +111,8 @@ exports.register = async function(request, response)
     catch (err) {
         console.log(err);
         response.status(400).send(err);
-    };
-    
+    }
+    finally {
+        connection.end();
+    }
 }
