@@ -206,7 +206,6 @@ li.topmenuitem {
 body {
   background-image: url('images/bg.png');
   background-size: 1550px 700px;
-  background-repeat: no-repeat;
   background-position: center top;
   font-family: 'Montserrat', sans-serif;
 }

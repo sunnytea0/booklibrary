@@ -15,6 +15,9 @@ exports.getUsers = async function(request, response)
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };
 
 };

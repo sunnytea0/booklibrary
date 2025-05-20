@@ -19,6 +19,13 @@ $(document).ready(async function(){
   
 });
 
+function logout()
+{
+    window.user = null;
+    sessionStorage.setItem('user', null)
+    showLogin();
+}
+
 async function prepare()
 {
 //    debugger;
@@ -262,6 +269,11 @@ function createEventHandlers()
         await showUsers();
     });
 
+    $('body').on('click', '#logoutref', async function(e){
+        e.preventDefault();
+        await logout();
+    });
+
     $('body').on('click', '#addbookcategory', async function(e){
         e.preventDefault();
         $('#bookcategoryeditcore').first().removeClass("hidden");
@@ -444,6 +456,9 @@ function hiddenAll()
 function showLogin()
 {
     hiddenAll();
+    if( !$('#topmenu').first().hasClass("hidden")){
+        $('#topmenu').first().addClass("hidden");
+    }
     $('#login').first().removeClass("hidden");
 }
 
@@ -531,25 +546,6 @@ function showNewState()
     $('#newstatepart').first().removeClass("hidden");
 }
 
-// function saveToLocalStorage(data)
-// {
-//     localStorage.setItem('authors', JSON.stringify(data.authors));
-//     localStorage.setItem('categories', JSON.stringify(data.categories));
-//     localStorage.setItem('books', JSON.stringify(data.books));
-// }
-
-// function loadFromLocalStorage()
-// {
-//     let authors = JSON.parse( localStorage.authors );
-//     let categories = JSON.parse( localStorage.categories );
-//     let books = JSON.parse( localStorage.books );
-//     books.forEach( book => {
-//         book.author = authors.find(a => a.authorId == author.authorId);
-//     })
-
-//     return {authors: authors, categories: categories, books: books};
-// }
-
 async function applyLogin()
 {
  //   debugger;
@@ -597,8 +593,5 @@ async function applyRegister()
         }
 
     }
-    
-
- 
 
 }

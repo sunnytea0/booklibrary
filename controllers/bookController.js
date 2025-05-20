@@ -20,6 +20,9 @@ INNER JOIN User as u ON (b.UserId = u.UserId)`;
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };    
 };
 
@@ -81,16 +84,19 @@ exports.postBook = async function(request, response)
         response.json(results[0]);
         console.log("Book aded/updated");
     
-        let err = await connection.promise().end();
-        if (err) {
-            return console.log("Error: " + err.message);
-        }
+        // let err = await connection.promise().end();
+        // if (err) {
+        //     return console.log("Error: " + err.message);
+        // }
         console.log("Connection closed");
 
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };
     
 }
@@ -128,11 +134,13 @@ WHERE BookId = ${id});`);
         response.status(200);
         response.send(results);
         console.log("Book deleted");
-        connection.end();
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };    
     
  }
@@ -155,16 +163,13 @@ WHERE BookId = ${id} `;
                 return;
         }
         response.json(result[0][0]);
-        connection.end(function(err) {
-            if (err) {
-                return console.log("Error: " + err.message);
-            }
-            console.log("Connection closed");
-        });
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };   
     
 }
@@ -187,6 +192,9 @@ WHERE b.AuthorId = ${authorId} `;
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };    
 
 }
@@ -209,6 +217,9 @@ WHERE b.UserId = ${userId}`;
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };    
 
 }
@@ -232,6 +243,9 @@ WHERE bc.CategoryId = ${categoryId}`;
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };    
 }
 
@@ -302,16 +316,13 @@ exports.updateState = async function(request, response) {
         response.json(results[0]);
         console.log("Book state update");
     
-        let err = await connection.promise().end();
-        if (err) {
-            return console.log("Error: " + err.message);
-        }
-        console.log("Connection closed");
-
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };
    
 }
@@ -361,16 +372,13 @@ exports.addToCategory = async function(request, response){
         response.json(results[0]);
         console.log("Book aded to category");
     
-        let err = await connection.promise().end();
-        if (err) {
-            return console.log("Error: " + err.message);
-        }
-        console.log("Connection closed");
-
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };
 }
 
@@ -406,11 +414,13 @@ exports.deleteFromCategory = async function(request, response){
         response.status(200);
         response.send(results);
         console.log("category deleted");
-        connection.end();
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };
 }
 

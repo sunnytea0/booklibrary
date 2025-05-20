@@ -15,6 +15,9 @@ exports.getCategories = async function(request, response)
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };
 
 };
@@ -58,16 +61,13 @@ exports.postCategory = async function(request, response)
             response.json(results[0]);
             console.log("Category added");
                 
-            connection.end(function(err) {
-                if (err) {
-                        return console.log("Error: " + err.message);
-                }
-                console.log("Connection closed");
-            });
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };
     
 }
@@ -102,11 +102,13 @@ exports.deleteCategory = async function(request, response){
         response.status(200);
         response.send(results);
         console.log("category deleted");
-        connection.end();
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };
     
  }
@@ -140,16 +142,13 @@ WHERE c.CategoryId = ${id};`);
             category.book = booksResult[0]; 
         }      
         response.json(category);
-        connection.end(function(err) {
-            if (err) {
-                return console.log("Error: " + err.message);
-            }
-            console.log("Connection closed");
-        });
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };   
     
 }
@@ -167,16 +166,13 @@ INNER JOIN booklib.category as c ON c.CategoryId = bc.CategoryId
 WHERE b.BookId = ${id};`);
   
         response.json(categoryResult[0]);
-        connection.end(function(err) {
-            if (err) {
-                return console.log("Error: " + err.message);
-            }
-            console.log("Connection closed");
-        });
     }
     catch (err) {
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };   
     
 }

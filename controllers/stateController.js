@@ -18,6 +18,9 @@ exports.getStates = async function(request, response)
  //       debugger;
         console.log(err);
         response.json(err);
+    }
+    finally {
+        connection.end();
     };
 };
 
@@ -52,17 +55,14 @@ exports.postState = async function(request, response)
         let results = await connection.promise().query(sql);
         response.json(results[0]);
         console.log("State added");
-        connection.end(function(err) {
-            if (err) {
-                return console.log("Error: " + err.message);
-            }
-            console.log("Connection closed");
-        });
     }
     catch (err) {
         debugger;
         console.log(err);
         response.json(err);
+    }
+    finally {
+        connection.end();
     };
     
 }
@@ -90,12 +90,14 @@ exports.deleteState = async function(request, response){
         response.status(200);
         response.send(results[0]);
         console.log("State deleted");
-        connection.end();
     }
     catch (err) {
         debugger;
         console.log(err);
         response.json(err);
+    }
+    finally {
+        connection.end();
     };
  }
  
@@ -114,17 +116,14 @@ WHERE BookId = ${id} AND userId = ${global.user.userId};`);
             return;
         }
         response.json(categoryResult[0][0]);
-        connection.end(function(err) {
-            if (err) {
-                return console.log("Error: " + err.message);
-            }
-            console.log("Connection closed");
-        });
     }
     catch (err) {
         debugger;
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };   
     
 }
@@ -143,17 +142,14 @@ LEFT OUTER JOIN booklib.readingState as rsn ON sh.NewReadingStateId = rsn.readin
 WHERE bs.BookId = ${id} AND bs.userId = ${global.user.userId};`);
   
         response.json(categoryResult[0]);
-        connection.end(function(err) {
-            if (err) {
-                return console.log("Error: " + err.message);
-            }
-            console.log("Connection closed");
-        });
     }
     catch (err) {
         debugger;
         console.log(err);
         response.status(400).send(err.message);
+    }
+    finally {
+        connection.end();
     };   
     
 }
