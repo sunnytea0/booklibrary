@@ -236,7 +236,120 @@ body {
     margin-top: 10px;
 }
 #cancelcategory, #savecategory{
+    background-color: #f7f073;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 14px;
+}
+#authordeletepart{
+    color: white;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.canceldeleteauthor, #deleteauthorbutton{
+    background-color: #f7f073;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 14px;
+}
+#deleteauthorname, #deleteauthorid{
+    padding: 6px 10px;
+    border: 1px solid #f8fb8f;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+#deletecategoryid, #deletecategoryname{
+    padding: 6px 10px;
+    border: 1px solid #f8fb8f;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+#categorydeletepart{
+    color: white;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+#canceldeletecategory, .deletecategoryexec{
+    background-color: #f7f073;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 14px;
+}
+#bookeditpart{
+    color: white;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
 
+}
+#editbooktitle, #editbookdescription, #editbookauthor, #statepage, #bookreadingstate, #editbookcategory{
+    padding: 6px 10px;
+    border: 1px solid #f8fb8f;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+#cancelbook, #savebook, .deletebookcategory, #cancelbookcategory, #addbookcategoryaction, #savenewstate{
+    background-color: #f7f073;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#bookdeletepart{
+    color: white;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+#deletebooktitle, #deletebookauthorname{
+    padding: 6px 10px;
+    border: 1px solid #f8fb8f;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+#canceldeletebook,#deletebookbutton{
+    background-color: #f7f073;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 14px;
+}
+#bookcategorytable{
+  color: #000;
 }
 #newstatepart {
     background-color: azure;
@@ -256,7 +369,7 @@ table#booktable td,table#authortable td,table#categorytable td, table#usertable 
 table#categorytable td,
 table#categorybooktable td,
 table#userbooktable td,
-table#usertable td {
+table#usertable td,table#bookcategorytable td, table#bookcategoryeditcore td {
     background-color: #ffffff;
 }
 
@@ -288,7 +401,8 @@ tr {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);    max-width: 800px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);    
+    max-width: 800px;
       
 }
 
@@ -370,7 +484,7 @@ tr {
 
 #booktable, #authortable, #authorbooktable,
 #categorytable, #categorybooktable,
-#userbooktable, #usertable {
+#userbooktable, #usertable,#bookcategorytable, #bookcategoryeditcore {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
@@ -384,7 +498,7 @@ tr {
 #authorbooktable th, #authorbooktable td,
 #categorytable th, #categorytable td,
 #categorybooktable th, #categorybooktable td,
-#userbooktable th, #userbooktable td, #usertable td, #usertable th {
+#userbooktable th, #userbooktable td, #usertable td, #usertable th,#bookcategorytable th, #bookcategoryeditcore th, #bookcategorytable td, #bookcategoryeditcore td {
   border: 1px solid #d4c5b2;
   padding: 12px 16px;
   text-align: left;
@@ -396,7 +510,7 @@ tr {
 #categorytable th,
 #categorybooktable th,
 #userbooktable th, 
-#usertable th {
+#usertable th, #bookcategorytable th , #bookcategoryeditcore th{
   background-color: #fff39b;
   color: #333;
   font-weight: bold;
@@ -406,7 +520,7 @@ tr {
 #authorbooktable tr:last-child td,
 #categorytable tr:last-child td,
 #categorybooktable tr:last-child td,
-#userbooktable tr:last-child td , #usertable tr:last-child td{
+#userbooktable tr:last-child td , #usertable tr:last-child td, #bookcategorytable tr:last-child td, #bookcategoryeditcore tr:last-child td{
   border-bottom: none;
 }
 

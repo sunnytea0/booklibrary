@@ -28,7 +28,7 @@ INNER JOIN User as u ON (b.UserId = u.UserId)`;
 
 exports.getFilterBooks = async function(request, response)
 {
-    debugger;
+ //   debugger;
     const search = request.params.search; 
     const connection = mysql.createConnection(connectionOption);
     connection.connect();
