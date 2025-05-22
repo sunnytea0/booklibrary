@@ -173,10 +173,23 @@ li.topmenuitem {
   color: white; /* щоб текст був світлим на темному фоні */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   max-width: 360px;
-  margin-left: 1000px;
+  width: 360px;
+  margin-right: 100px;
   margin-top: 100px;
+  float: right;
   }
-
+#bookeditpart{
+  background-color: rgba(0, 0, 0, 0.5); 
+  border-radius: 15px;
+  color: white; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  max-width: 1100px;
+  width: 1100px;
+  margin-top: 100px;
+}
+#bookcategoryeditcore{
+  color:#000;
+}
   .login-title {
     text-align: center;
     margin-bottom: 20px;
@@ -303,13 +316,19 @@ body {
     margin-top: 20px;
 
 }
-#editbooktitle, #editbookdescription, #editbookauthor, #statepage, #bookreadingstate, #editbookcategory{
+#editbooktitle, #editbookdescription, #editbookauthor, #statepage, #bookreadingstate{
     padding: 6px 10px;
     border: 1px solid #f8fb8f;
     border-radius: 8px;
     width: 100%;
     max-width: 300px;
     margin-top: 10px;
+}
+#editbookcategory{
+  padding: 6px 10px;
+  border:1px solid #000;
+  border-radius: 8px;
+  width: 100%;
 }
 #cancelbook, #savebook, .deletebookcategory, #cancelbookcategory, #addbookcategoryaction, #savenewstate{
     background-color: #f7f073;
@@ -369,7 +388,7 @@ table#booktable td,table#authortable td,table#categorytable td, table#usertable 
 table#categorytable td,
 table#categorybooktable td,
 table#userbooktable td,
-table#usertable td,table#bookcategorytable td, table#bookcategoryeditcore td {
+table#usertable td,table#bookcategorytable td, table#bookcategoryeditcore td, table#bookstatetable td {
     background-color: #ffffff;
 }
 
@@ -474,7 +493,7 @@ tr {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.addbutton:hover {
+.addbutton:hover, #savenewstate:hover, #cancelbook:hover,#savebook:hover, .deletebookcategory:hover, #saveauthor:hover, #cancelauthor:hover, .canceldeleteauthor:hover,#deletebookbutton:hover,#canceldeletebook:hover,#cancelcategory:hover, #savecategory:hover, #canceldeletecategory:hover,.deletecategoryexec:hover, #deleteauthorbutton {
     background-color: #ffc146;
 
     }
@@ -484,7 +503,7 @@ tr {
 
 #booktable, #authortable, #authorbooktable,
 #categorytable, #categorybooktable,
-#userbooktable, #usertable,#bookcategorytable, #bookcategoryeditcore {
+#userbooktable, #usertable,#bookcategorytable, #bookcategoryeditcore, #bookstatetable {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
@@ -498,7 +517,7 @@ tr {
 #authorbooktable th, #authorbooktable td,
 #categorytable th, #categorytable td,
 #categorybooktable th, #categorybooktable td,
-#userbooktable th, #userbooktable td, #usertable td, #usertable th,#bookcategorytable th, #bookcategoryeditcore th, #bookcategorytable td, #bookcategoryeditcore td {
+#userbooktable th, #userbooktable td, #usertable td, #usertable th,#bookcategorytable th, #bookcategoryeditcore th, #bookcategorytable td, #bookcategoryeditcore td, #bookstatetable td, #bookstatetable th{
   border: 1px solid #d4c5b2;
   padding: 12px 16px;
   text-align: left;
@@ -510,7 +529,7 @@ tr {
 #categorytable th,
 #categorybooktable th,
 #userbooktable th, 
-#usertable th, #bookcategorytable th , #bookcategoryeditcore th{
+#usertable th, #bookcategorytable th , #bookcategoryeditcore th, #bookstatetable th{
   background-color: #fff39b;
   color: #333;
   font-weight: bold;
@@ -520,10 +539,12 @@ tr {
 #authorbooktable tr:last-child td,
 #categorytable tr:last-child td,
 #categorybooktable tr:last-child td,
-#userbooktable tr:last-child td , #usertable tr:last-child td, #bookcategorytable tr:last-child td, #bookcategoryeditcore tr:last-child td{
+#userbooktable tr:last-child td , #usertable tr:last-child td, #bookcategorytable tr:last-child td, #bookcategoryeditcore tr:last-child td, #bookstatetable tr:last-child td{
   border-bottom: none;
 }
-
+#bookstatetable{
+  color: #000;
+}
 .flex-item {
     margin: 5px;
     padding: 2px;

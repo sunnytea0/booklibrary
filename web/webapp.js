@@ -563,8 +563,8 @@ function showAuthorDelete()
 
 function showCategoryDelete()
 {
-    if( !$('#cagtegorymain').first().hasClass("hidden")){
-        $('#cagtegorymain').first().addClass("hidden");
+    if( !$('#categorymain').first().hasClass("hidden")){
+        $('#categorymain').first().addClass("hidden");
     }
 
     $('#categorydeletepart').first().removeClass("hidden");
