@@ -178,6 +178,7 @@ li.topmenuitem {
   margin-top: 100px;
   float: right;
   }
+  
 #bookeditpart{
   background-color: rgba(0, 0, 0, 0.5); 
   border-radius: 15px;
@@ -493,7 +494,7 @@ tr {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.addbutton:hover, #savenewstate:hover, #cancelbook:hover,#savebook:hover, .deletebookcategory:hover, #saveauthor:hover, #cancelauthor:hover, .canceldeleteauthor:hover,#deletebookbutton:hover,#canceldeletebook:hover,#cancelcategory:hover, #savecategory:hover, #canceldeletecategory:hover,.deletecategoryexec:hover, #deleteauthorbutton {
+.addbutton:hover, #savenewstate:hover, #cancelbook:hover,#savebook:hover, .deletebookcategory:hover, #saveauthor:hover, #cancelauthor:hover, .canceldeleteauthor:hover, #deletebookbutton:hover,#canceldeletebook:hover,#cancelcategory:hover, #savecategory:hover, #canceldeletecategory:hover,.deletecategoryexec:hover, #deleteauthorbutton:hover {
     background-color: #ffc146;
 
     }
