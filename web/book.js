@@ -1,7 +1,7 @@
 
 async function fillBookForm(bookId)
 {
-//    debugger;
+   // debugger;
     showBookEdit();
     if( !$('#bookediterror').first().hasClass("hidden")){
         $('#bookediterror').first().addClass("hidden");
@@ -12,6 +12,7 @@ async function fillBookForm(bookId)
    if (bookId)
     {
         let book = await fetchBookById(bookId);
+        localStorage.setItem('book', JSON.stringify(book));
         if ( book)
         {
             $('#editbookid').first().val(book.bookId);
@@ -43,12 +44,17 @@ async function fillBookForm(bookId)
 
 async function saveBookForm()
 {
-//    debugger;
+   // debugger;
     let book = {};
     book.bookId = $('#editbookid').first().val();
     book.authorId = $('#editbookauthor').first().val();
     book.title = $('#editbooktitle').first().val();
     book.bookDescription = $('#editbookdescription').first().val();
+    if (book.bookId )
+    {
+        let oldBook = JSON.parse( localStorage.getItem("book") );
+        book.userId = oldBook.userId;
+    }
 
     if (book.title && book.bookDescription)
     {
@@ -350,7 +356,7 @@ async function deleteBookCategory(categoryId)
 
 async function applyFilter()
 {
-    debugger;
+//    debugger;
     const filtervalue = $('.filtervalue').first().val().toLowerCase();
     let books = await getFilterBookList(filtervalue);
     // books = books.filter(item => item.title.toLowerCase().indexOf(filtervalue) >= 0 || 

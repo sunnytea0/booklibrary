@@ -109,14 +109,18 @@ async function fillDeleteCategoryForm(categoryId)
         let category = await fetchCategoryById(categoryId);
         if (category)
         {
+        //    debugger;
             showCategoryDelete();
             if ((category.books?.length ?? 0) > 0)
             {
-                if( !$('#categorydeleteaction').first().hasClass("hidden")){
-                    $('#categorydeleteaction').first().addClass("hidden");
-                }
+                // if( !$('#categorydeleteaction').first().hasClass("hidden")){
+                //     $('#categorydeleteaction').first().addClass("hidden");
+                // }
                 $('#categorydeleteissue').first().removeClass("hidden");
-                $("#categoryeditlabel").text("Category has books. Category can not be deleted");
+                $("#categorydeleteissuetext").text("Category has books. Category can not be deleted");
+                if( !$('#deletecategorybutton').first().hasClass("hidden")){
+                    $('#deletecategorybutton').first().addClass("hidden");
+                }
     
                 var results = $('#categorydeleteissuetable');  // 
                 results.empty();                // clear element
@@ -130,28 +134,40 @@ async function fillDeleteCategoryForm(categoryId)
                 if( !$('#categorydeleteissue').first().hasClass("hidden")){
                     $('#categorydeleteissue').first().addClass("hidden");
                 }
-                $('#categorydeleteaction').first().removeClass("hidden");
+                $('#deletecategorybutton').first().removeClass("hidden");
+                //$('#categorydeleteaction').first().removeClass("hidden");
 
-                $('#deletecategoryid').first().val(category.categoryId);
-                $('#deletecategoryname').first().val(category.categoryName);
             }
-        }
+            $('#deletecategoryid').first().val(category.categoryId);
+            $('#deletecategoryname').first().val(category.categoryName);
+    }
     }
 }
 
 
 async function deleteCategory()
 {
-//    debugger;
+ //   debugger;
     const categoryId = $('#deletecategoryid').first().val();
     const result = await deleteCategoryFromServer(categoryId);
     if (result)
     {
-        let categories = JSON.parse( localStorage.categories );
-        categories = categories.filter(function(item) {
-            item.categoryId != categoryId
-        });
-        localStorage.setItem('categories', JSON.stringify(categories));
+        if (result.status == 200)
+        {
+            let categories = JSON.parse( localStorage.categories );
+            categories = categories.filter(function(item) {
+                item.categoryId != categoryId
+            });
+            localStorage.setItem('categories', JSON.stringify(categories));
+            if( !$('#categorydeleteissue').first().hasClass("hidden")){
+                $('#categorydeleteissue').first().addClass("hidden");
+            }
+        }
+        else
+        {
+            $("#categorydeleteissuetext").text("Category has books. Category can not be deleted");
+            $('#categorydeleteissue').first().removeClass("hidden");
+        }
     }
 
     await showCategories();

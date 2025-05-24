@@ -24,7 +24,7 @@ exports.getCategories = async function(request, response)
 
 exports.postCategory = async function(request, response)
 {
-    //debugger;
+ //   debugger;
     if (global.user.role != 'Admin')
     {
         response.status(403).send("Access denited.");
@@ -79,7 +79,7 @@ exports.deleteCategory = async function(request, response){
     }    
          
     const id = request.params.id; 
- //   debugger;
+   // debugger;
     const connection = mysql.createConnection(connectionOption);
     const sqlSelect = `SELECT * FROM category WHERE CategoryId = '${id}'`;
     const sql = `DELETE FROM category WHERE CategoryId = '${id}'`;
@@ -139,7 +139,7 @@ WHERE c.CategoryId = ${id};`);
         }  
         else
         {
-            category.book = booksResult[0]; 
+            category.books = booksResult[0]; 
         }      
         response.json(category);
     }

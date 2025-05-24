@@ -305,7 +305,7 @@ async function deleteBookFromServer(bookId) {
         const option = getOptionForDelete();
         let response = await fetch(`${urlOption.host}/api/book/${bookId}`, option) // 
         let result = null;
-        if (response.status != 400)
+        if (response.status == 200)
         {
 //            debugger;
             result = await response.json();  // 
@@ -328,7 +328,7 @@ async function deleteAuthorFromServer(authorId) {
         let response = await fetch(`${urlOption.host}/api/author/${authorId}`, option) // 
  //       debugger;
         let result = null;
-        if (response.status != 400)
+        if (response.status == 200)
         {
 //            debugger;
             result = await response.json();  // 
@@ -351,7 +351,7 @@ async function deleteCategoryFromServer(categoryId) {
         let response = await fetch(`${urlOption.host}/api/category/${categoryId}`, option) // 
 //        debugger;
         let result = null;
-        if (response.status != 400)
+        if (response.status == 200)
         {
 //            debugger;
             result = await response.json();  // 
@@ -374,7 +374,7 @@ async function deleteBookCategoryFromServer(bookId,categoryId) {
         let response = await fetch(`${urlOption.host}/api/book/deleteFromCategory/${bookId}/${categoryId}`, option) // 
 //        debugger;
         let result = null;
-        if (response.status != 400)
+        if (response.status == 200)
         {
 //            debugger;
             result = await response.json();  // 
@@ -405,7 +405,7 @@ async function login(userName, password) {
           }
         let response = await fetch(`${urlOption.host}/api/login`, option) // 
         let user = null;
-        if (response.status != 400)
+        if (response.status == 200)
             user = await response.json();  // 
         sessionStorage.setItem('user', JSON.stringify(user));
         return user;
@@ -450,12 +450,12 @@ async function register(userName, password) {
 async function saveBookToServer (book) {
     try 
     {
-//        debugger;
+    //    debugger;
         const option = getOptionForPost();
         option.body = JSON.stringify(book)
         let response = await fetch(`${urlOption.host}/api/book`, option) // 
         let result = null;
-        if (response.status != 400)
+        if (response.status == 200)
         {
             result = await response.json();  // 
             if (result.insertId)
@@ -483,7 +483,7 @@ async function saveAuthorToServer (author) {
         let response = await fetch(`${urlOption.host}/api/author`, option) // 
 //        debugger;
         let result = null;
-        if (response.status != 400)
+        if (response.status == 200)
         {
 //            debugger;
             result = await response.json();  // 
@@ -512,7 +512,7 @@ async function saveCategoryToServer (category) {
         let response = await fetch(`${urlOption.host}/api/category`, option) // 
  //       debugger;
         let result = null;
-        if (response.status != 400)
+        if (response.status == 200)
         {
 //            debugger;
             result = await response.json();  // 
