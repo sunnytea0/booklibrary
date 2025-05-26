@@ -611,10 +611,7 @@ async function applyRegister()
     const userName = $('#registername').first().val();
     const password = $('#registerpassword').first().val();
     const confirmPassword = $('#registerconfirmpassword').first().val();
-    if (password !== confirmPassword)
-    {
-            $("#loginresult").text("Passwords are different");
-    }
+    
     if (userName && password)
     {
         let user = await register(userName, password);
